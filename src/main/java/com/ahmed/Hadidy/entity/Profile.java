@@ -1,8 +1,6 @@
 package com.ahmed.Hadidy.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -10,27 +8,39 @@ import java.time.LocalDate;
 @Table(name = "profile")
 public class Profile {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profile_id")
     private Long id ;
 
+    @Column(name="full_name")
     private String fullName;
 
+    @Column(name="weight")
     private double weight ;
 
+    @Column(name="height")
     private double height  ;
 
+    @Column(name="is_public")
     private boolean isPublic;
 
-    private double gypePrice ;
+    @Column(name="gym_price")
+    private double gymPrice ;
 
+    @Column(name="goal")
     private String goal ;
 
     @OneToOne(mappedBy = "profile")
     private User user ;
 
+    @Column(name="start_subscribe")
     private LocalDate startSubscribe ;
 
+    @Column(name="end_subscribe")
     private LocalDate endSubscribe ;
 
+    @Column(name="profile_picture")
     private String profilePicture;
 
     public Long getId() {
@@ -73,12 +83,12 @@ public class Profile {
         isPublic = aPublic;
     }
 
-    public double getGypePrice() {
-        return gypePrice;
+    public double getGymPrice() {
+        return gymPrice;
     }
 
-    public void setGypePrice(double gypePrice) {
-        this.gypePrice = gypePrice;
+    public void setGymPrice(double gymPrice) {
+        this.gymPrice = gymPrice;
     }
 
     public User getUser() {

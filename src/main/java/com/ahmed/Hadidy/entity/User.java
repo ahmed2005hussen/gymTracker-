@@ -1,29 +1,50 @@
 package com.ahmed.Hadidy.entity;
-
 import com.ahmed.Hadidy.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id ;
 
+    @Column(name = "username")
     private String username ;
 
+    @Column(name = "gmail")
     private String gmail ;
 
+    @Column(name = "password")
     private String password ;
 
+    @OneToMany(cascade = CascadeType.ALL)
     private Role role ;
 
     @OneToOne
     @JoinColumn(name = "profile_id")
     private Profile profile ;
 
+
+    @OneToMany(mappedBy = "user")
+    private Set<WorkoutPlan> workoutPlan = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<DietPlan> dietPlan = new HashSet<>() ;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Supplement> supplement = new HashSet<>() ;
+
+    @OneToMany(mappedBy = "user")
+    private Set<ProgressTracking> progressTracking = new HashSet<>() ;
+
+    @Column(name = "is_active")
     private boolean isActive ;
 
     public Profile getProfile() {
@@ -80,5 +101,38 @@ public class User {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+
+    public Set<WorkoutPlan> getWorkoutPlan() {
+        return workoutPlan;
+    }
+
+    public void setWorkoutPlan(Set<WorkoutPlan> workoutPlan) {
+        this.workoutPlan = workoutPlan;
+    }
+
+    public Set<DietPlan> getDietPlan() {
+        return dietPlan;
+    }
+
+    public void setDietPlan(Set<DietPlan> dietPlan) {
+        this.dietPlan = dietPlan;
+    }
+
+    public Set<Supplement> getSupplement() {
+        return supplement;
+    }
+
+    public void setSupplement(Set<Supplement> supplement) {
+        this.supplement = supplement;
+    }
+
+    public Set<ProgressTracking> getProgressTracking() {
+        return progressTracking;
+    }
+
+    public void setProgressTracking(Set<ProgressTracking> progressTracking) {
+        this.progressTracking = progressTracking;
     }
 }
