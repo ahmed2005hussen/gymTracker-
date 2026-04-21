@@ -24,13 +24,11 @@ public class User {
     @Column(name = "password")
     private String password ;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
     private Role role ;
 
-    @OneToOne
-    @JoinColumn(name = "profile_id")
+    @OneToOne(mappedBy = "user")
     private Profile profile ;
-
 
     @OneToMany(mappedBy = "user")
     private Set<WorkoutPlan> workoutPlan = new HashSet<>();
@@ -102,7 +100,6 @@ public class User {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 
     public Set<WorkoutPlan> getWorkoutPlan() {
         return workoutPlan;

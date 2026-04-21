@@ -31,7 +31,8 @@ public class Profile {
     @Column(name="goal")
     private String goal ;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user ;
 
     @Column(name="start_subscribe")

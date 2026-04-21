@@ -34,7 +34,7 @@ public class Meal {
     private String time;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "diet_plan_id")
     private DietPlan dietPlan;
 
     public Long getId() {

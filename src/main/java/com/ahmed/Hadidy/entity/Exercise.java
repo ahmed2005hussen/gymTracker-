@@ -26,7 +26,7 @@ public class Exercise {
 
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "workout_day_id")
     private WorkoutDay workoutDay;
 
 

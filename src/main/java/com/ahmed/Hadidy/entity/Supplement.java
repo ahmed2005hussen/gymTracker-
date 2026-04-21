@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Supplement {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
     @Column(name ="name")
@@ -25,7 +26,7 @@ public class Supplement {
     private boolean isPublic ;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user ;
 
 

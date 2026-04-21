@@ -30,7 +30,7 @@ public class WorkoutDay {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workout_plan_id")
     private WorkoutPlan workoutPlan;
 

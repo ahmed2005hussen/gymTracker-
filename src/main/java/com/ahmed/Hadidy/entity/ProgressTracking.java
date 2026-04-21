@@ -12,9 +12,6 @@ public class ProgressTracking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "weight")
     private double weight ;
 
@@ -34,7 +31,7 @@ public class ProgressTracking {
     private boolean isPublic ;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user ;
 
     public Long getId() {
@@ -43,14 +40,6 @@ public class ProgressTracking {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getWeight() {
