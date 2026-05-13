@@ -28,7 +28,6 @@ public class DietPlan {
     @OneToMany(mappedBy= "dietPlan")
     private Set<Meal> meal = new HashSet<>();
 
-
     public Long getId() {
         return id;
     }

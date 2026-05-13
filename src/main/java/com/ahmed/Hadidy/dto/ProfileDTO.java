@@ -1,56 +1,28 @@
-package com.ahmed.Hadidy.entity;
-
-import jakarta.persistence.*;
+package com.ahmed.Hadidy.dto;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "profile")
-public class Profile {
+public class ProfileDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "profile_id")
-    private Long id ;
-
-    @Column(name="full_name")
     private String fullName;
 
-    @Column(name="weight")
     private double weight ;
 
-    @Column(name="height")
     private double height  ;
 
-    @Column(name="is_public")
     private boolean isPublic;
 
-    @Column(name="gym_price")
     private double gymPrice ;
 
-    @Column(name="goal")
     private String goal ;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user ;
+    private Long userId ;
 
-    @Column(name="start_subscribe")
     private LocalDate startSubscribe ;
 
-    @Column(name="end_subscribe")
     private LocalDate endSubscribe ;
 
-    @Column(name="profile_picture")
     private String profilePicture;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFullName() {
         return fullName;
@@ -92,12 +64,12 @@ public class Profile {
         this.gymPrice = gymPrice;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getProfilePicture() {
