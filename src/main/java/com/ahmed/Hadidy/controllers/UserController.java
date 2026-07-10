@@ -1,50 +1,79 @@
 package com.ahmed.Hadidy.controllers;
 
+import com.ahmed.Hadidy.dto.EditPasswordRequest;
 import com.ahmed.Hadidy.entity.User;
 import com.ahmed.Hadidy.repository.UserRepository;
-import com.ahmed.Hadidy.service.interfaces.UserService;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
+
 public class UserController {
 
+  private final UserRepository userRepository ;
+  private final PasswordEncoder passwordEncoder;
 
-  private final UserService userService ;
-
-    UserController(UserService userService){
-        this.userService = userService;
-    }
-
-
-    @GetMapping("/findByGmail/{gmail}")
-    public ResponseEntity<User> findByGmail(@PathVariable String gmail){
-
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody User user){
         try {
-            User user = userService.findByGmail(gmail)
-                    .orElseThrow(() -> new RuntimeException("not found"));
-            return ResponseEntity.ok(user);
+
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+
+            User savedUser = userRepository.save(user);
+
+            if(savedUser.getId() > 0){
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body("User with userName: " + user.getUsername() + " is created");
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("User with userName: " + user.getUsername() + " is not created");
+            }
+
         }catch(RuntimeException e ){
 
-            return ResponseEntity.notFound().build() ;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An Exception occurred: " + e.getMessage());
         }
-
     }
 
-    @GetMapping("/findAll")
-    public List<User> findAll(){
-        return userService.findAll() ;
+    @PatchMapping("/editpassword")
+    public ResponseEntity<String> editPassword(@RequestBody EditPasswordRequest request,
+                                               Authentication authentication){
+
+        try{
+            String username = authentication.getName();
+            User user = userRepository.findByUsername(username).orElseThrow(
+                    ()-> new RuntimeException("User with username = " + username +" ,not found")
+            );
+
+
+            if(passwordEncoder.matches(request.getOldPass() , user.getPassword()) ){
+                String newEncodedPassword = passwordEncoder.encode(request.getNewPass());
+                user.setPassword(newEncodedPassword);
+                userRepository.save(user);
+
+                return ResponseEntity.status(HttpStatus.OK).body(
+                        "The password is edited for the user : " + user.getUsername()
+                );
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        "The password is not correct for the user : " +user.getUsername()
+                );
+            }
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An Exception occurred: " + e.getMessage());
+        }
     }
-
-    @PostMapping("/save")
-    public User save(@RequestBody User user){
-        return userService.save(user);
-    }
-
-
 }

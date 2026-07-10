@@ -1,4 +1,16 @@
 package com.ahmed.Hadidy.controllers;
 
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api")
 public class DietPlanController {
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello";
+    }
 }
