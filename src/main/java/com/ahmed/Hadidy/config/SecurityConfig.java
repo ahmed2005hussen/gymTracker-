@@ -17,7 +17,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests((request) ->
 
                 request.requestMatchers("/api/user/register").permitAll()
-                        .requestMatchers("/api/user/editpassword" , "/api/hello").authenticated()
+                        .requestMatchers("/api/user/editpassword" , "/api/hello" , "/api/profile/editprofile").authenticated()
+                        .anyRequest().authenticated()
 
         );
 
