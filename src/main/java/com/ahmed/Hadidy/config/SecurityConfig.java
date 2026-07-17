@@ -17,7 +17,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests((request) ->
 
                 request.requestMatchers("/api/user/register").permitAll()
-                        .requestMatchers("/api/user/editpassword" , "/api/hello" , "/api/profile/editprofile").authenticated()
+                        .requestMatchers("/api/user/editpassword" , "/api/hello" ,
+                                "/api/profile/editprofile", "/api/profile/getprofile",
+                                "/api/workoutplan/create" , "/api/workoutplan/list",
+                                "/api/workoutplan/list/{id}" , "/api/workoutplan/delete/{id}"
+                                , "/api/workoutplan/edit/{id}").authenticated()
                         .anyRequest().authenticated()
 
         );

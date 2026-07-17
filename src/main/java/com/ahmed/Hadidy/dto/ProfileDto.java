@@ -1,6 +1,6 @@
 package com.ahmed.Hadidy.dto;
 
-import com.ahmed.Hadidy.entity.User;
+import com.ahmed.Hadidy.entity.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,4 +32,18 @@ public class ProfileDto {
 
         private String gmail;
 
+        private double bmi ;
+
+        public ProfileDto(Profile p) {
+                this.fullName = p.getFullName();
+                this.weight = p.getWeight();
+                this.height = p.getHeight();
+                this.gymPrice = p.getGymPrice();
+                this.goal = p.getGoal();
+                this.startSubscribe = p.getStartSubscribe();
+                this.endSubscribe = p.getEndSubscribe();
+                this.profilePicture = p.getProfilePicture();
+                this.gmail = p.getGmail();
+                this.bmi = p.getBmi();
+        }
 }

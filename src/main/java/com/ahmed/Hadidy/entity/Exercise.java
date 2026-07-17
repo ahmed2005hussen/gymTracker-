@@ -1,8 +1,16 @@
 package com.ahmed.Hadidy.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Exercise {
 
     @Id
@@ -24,65 +32,7 @@ public class Exercise {
     @Column(name ="picture")
     private String picture;
 
-
     @ManyToOne
     @JoinColumn(name = "workout_day_id")
     private WorkoutDay workoutDay;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getRepeat() {
-        return repeat;
-    }
-
-    public void setRepeat(int repeat) {
-        this.repeat = repeat;
-    }
-
-    public int getSets() {
-        return sets;
-    }
-
-    public void setSets(int sets) {
-        this.sets = sets;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public WorkoutDay getWorkoutDay() {
-        return workoutDay;
-    }
-
-    public void setWorkoutDay(WorkoutDay workoutDay) {
-        this.workoutDay = workoutDay;
-    }
 }

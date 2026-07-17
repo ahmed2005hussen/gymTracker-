@@ -14,6 +14,4 @@ public class EditPasswordRequest {
     private String oldPass ;
     private String newPass;
 
-
-
 }
