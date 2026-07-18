@@ -21,7 +21,7 @@ public class SecurityConfig {
                                 "/api/profile/editprofile", "/api/profile/getprofile",
                                 "/api/workoutplan/create" , "/api/workoutplan/list",
                                 "/api/workoutplan/list/{id}" , "/api/workoutplan/delete/{id}"
-                                , "/api/workoutplan/edit/{id}").authenticated()
+                                , "/api/workoutplan/edit/{id}", "/api/workoutday/create").authenticated()
                         .anyRequest().authenticated()
 
         );
