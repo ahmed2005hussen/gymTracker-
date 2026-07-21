@@ -52,7 +52,6 @@ public class DietPlanServiceImpl implements DietPlanService {
         DietPlan d = dietPlanRepository.findById(id).orElseThrow(() -> new RuntimeException("not found"));
 
         d.setDescription(dietPlan.getDescription());
-        d.setPublic(dietPlan.isPublic());
         d.setTitle(dietPlan.getTitle());
 
         return dietPlanRepository.save(d);
@@ -62,7 +61,7 @@ public class DietPlanServiceImpl implements DietPlanService {
     @Override
     public List<DietPlan> findByUserId(Long userId) {
 
-        return dietPlanRepository.findByUserId(userId);
+        return dietPlanRepository.findByProfileId(userId);
 
     }
 }

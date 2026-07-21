@@ -17,33 +17,21 @@ public class SecurityConfig {
         http.authorizeHttpRequests((request) ->
 
                 request.requestMatchers("/api/user/register").permitAll()
-                        .requestMatchers("/api/user/editpassword" , "/api/hello" ,
-                                "/api/profile/editprofile", "/api/profile/getprofile",
-                                "/api/workoutplan/create" , "/api/workoutplan/list",
-                                "/api/workoutplan/list/{id}" , "/api/workoutplan/delete/{id}"
-                                , "/api/workoutplan/edit/{id}", "/api/workoutday/create" ,
-                                "/api/workoutday/list/{workoutplanid}", "/api/workoutday/list/{workoutPlanId}/{workoutDayId}",
-                                "/api/workoutday/delete/{workoutPlanId}/{workoutDayId}" , "/api/workoutday/edit/{workoutPlanId}/{workoutDayId}"
-                                ,"/api/exercise/create" , "/api/exercise/list/{workoutplanid}/{workoutDay}",
-                                "/api/exercise/list/{workoutPlanId}/{workoutDayId}/{exerciseId}" , "/api/exercise/delete/{workoutPlanId}/{workoutDayId}/{exerciseId}" ,
-                                "/api/exercise/edit/{workoutPlanId}/{workoutDayId}/{exerciseId}"
-
-
-
-                        ).authenticated()
+                        .requestMatchers("/api/user/register", "/error").permitAll()
                         .anyRequest().authenticated()
+
 
         );
 
         http.httpBasic(withDefaults());
         http.formLogin(withDefaults());
-        http.csrf((cs)-> cs.disable());
+        http.csrf((cs) -> cs.disable());
 
-        return http.build() ;
+        return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 

@@ -1,7 +1,6 @@
 package com.ahmed.Hadidy.controllers;
 
 import com.ahmed.Hadidy.dto.ExerciseResponse;
-import com.ahmed.Hadidy.dto.WorkoutDayResponse;
 import com.ahmed.Hadidy.entity.Exercise;
 import com.ahmed.Hadidy.entity.User;
 import com.ahmed.Hadidy.entity.WorkoutDay;
@@ -25,7 +24,6 @@ import java.util.Set;
 @RequestMapping("/api/exercise")
 @RequiredArgsConstructor
 
-/// Note we Still Work On This class
 
 public class ExerciseController {
 
@@ -83,8 +81,8 @@ public class ExerciseController {
 
 
     @GetMapping("/list/{workoutplanid}/{workoutDayid}")
-    public ResponseEntity<?> listWorkoutPlan(Authentication authentication,
-                                             @PathVariable long workoutplanid
+    public ResponseEntity<?> listExercise(Authentication authentication,
+                                          @PathVariable long workoutplanid
             , @PathVariable long workoutDayid) {
         try {
             String username = authentication.getName();
@@ -143,10 +141,10 @@ public class ExerciseController {
     }
 
     @GetMapping("/list/{workoutPlanId}/{workoutDayId}/{exerciseId}")
-    public ResponseEntity<?> getWorkoutDay(Authentication authentication,
-                                           @PathVariable Long workoutPlanId,
-                                           @PathVariable Long workoutDayId,
-                                           @PathVariable Long exerciseId) {
+    public ResponseEntity<?> getExercise(Authentication authentication,
+                                         @PathVariable Long workoutPlanId,
+                                         @PathVariable Long workoutDayId,
+                                         @PathVariable Long exerciseId) {
         try {
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(
@@ -201,10 +199,10 @@ public class ExerciseController {
 
 
     @DeleteMapping("delete/{workoutPlanId}/{workoutDayId}/{exerciseId}")
-    public ResponseEntity<?> deleteWorkoutDay(@PathVariable Long workoutPlanId,
-                                              @PathVariable Long workoutDayId,
-                                              @PathVariable Long exerciseId,
-                                              Authentication authentication) {
+    public ResponseEntity<?> deleteExercise(@PathVariable Long workoutPlanId,
+                                            @PathVariable Long workoutDayId,
+                                            @PathVariable Long exerciseId,
+                                            Authentication authentication) {
 
         try {
             String username = authentication.getName();
@@ -258,12 +256,12 @@ public class ExerciseController {
     }
 
     @PatchMapping("/edit/{workoutPlanId}/{workoutDayId}/{exerciseId}")
-    ResponseEntity<String> editWorkoutPlan(@PathVariable Long workoutPlanId,
-                                           @PathVariable Long workoutDayId,
-                                           @PathVariable Long exerciseId
+    ResponseEntity<String> editExercise(@PathVariable Long workoutPlanId,
+                                        @PathVariable Long workoutDayId,
+                                        @PathVariable Long exerciseId
             , @RequestBody ExerciseResponse request,
-                                           Authentication authentication
-                                          ) {
+                                        Authentication authentication
+    ) {
         try {
 
             String username = authentication.getName();

@@ -1,8 +1,16 @@
 package com.ahmed.Hadidy.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Meal {
 
     @Id
@@ -37,83 +45,4 @@ public class Meal {
     @JoinColumn(name = "diet_plan_id")
     private DietPlan dietPlan;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(String recipe) {
-        this.recipe = recipe;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public double getCalories() {
-        return calories;
-    }
-
-    public void setCalories(double calories) {
-        this.calories = calories;
-    }
-
-    public double getProtein() {
-        return protein;
-    }
-
-    public void setProtein(double protein) {
-        this.protein = protein;
-    }
-
-    public double getCarbs() {
-        return carbs;
-    }
-
-    public void setCarbs(double carbs) {
-        this.carbs = carbs;
-    }
-
-    public double getFats() {
-        return fats;
-    }
-
-    public void setFats(double fats) {
-        this.fats = fats;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public DietPlan getDietPlan() {
-        return dietPlan;
-    }
-
-    public void setDietPlan(DietPlan dietPlan) {
-        this.dietPlan = dietPlan;
-    }
 }

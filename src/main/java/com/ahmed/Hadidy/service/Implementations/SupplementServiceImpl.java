@@ -46,13 +46,12 @@ public class SupplementServiceImpl implements SupplementService {
         s.setDescription(supplement.getDescription());
         s.setPrice(supplement.getPrice());
         s.setPicture(supplement.getPicture());
-        s.setPublic(supplement.isPublic());
 
         return supplementRepository.save(s);
     }
 
     @Override
     public List<Supplement> findByUserId(Long userId) {
-        return supplementRepository.findByUserId(userId);
+        return supplementRepository.findByProfileId(userId);
     }
 }

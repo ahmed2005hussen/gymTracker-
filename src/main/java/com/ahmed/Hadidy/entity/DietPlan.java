@@ -1,11 +1,19 @@
 package com.ahmed.Hadidy.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DietPlan {
 
     @Id
@@ -18,61 +26,12 @@ public class DietPlan {
     @Column(name= "description")
     private String description ;
 
-    @Column(name = "is_public")
-    private boolean isPublic ;
-
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user ;
+    @JoinColumn(name = "profile_id")
+    private Profile profile ;
 
     @OneToMany(mappedBy= "dietPlan")
     private Set<Meal> meal = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
-    }
-
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Meal> getMeal() {
-        return meal;
-    }
-
-    public void setMeal(Set<Meal> meal) {
-        this.meal = meal;
-    }
 }
