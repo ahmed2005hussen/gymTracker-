@@ -1,10 +1,10 @@
 package com.ahmed.Hadidy.controllers;
 
 
-import com.ahmed.Hadidy.dto.ProfileDto;
+import com.ahmed.Hadidy.dto.WorkoutDayResponse;
 import com.ahmed.Hadidy.dto.WorkoutPlanResponse;
-import com.ahmed.Hadidy.entity.Profile;
 import com.ahmed.Hadidy.entity.User;
+import com.ahmed.Hadidy.entity.WorkoutDay;
 import com.ahmed.Hadidy.entity.WorkoutPlan;
 import com.ahmed.Hadidy.repository.UserRepository;
 import com.ahmed.Hadidy.repository.WorkoutPlanRepository;
@@ -77,7 +77,20 @@ public class WorkoutPlanController {
                 for (WorkoutPlan w : workoutPlans) {
 
                     WorkoutPlanResponse workoutPlan = new WorkoutPlanResponse();
-                    workoutPlan.setWorkoutDays(w.getWorkoutDays());
+
+
+                    List<WorkoutDayResponse> days = new ArrayList<>();
+                    for (WorkoutDay wd : w.getWorkoutDays()) {
+                        WorkoutDayResponse dayDto = new WorkoutDayResponse();
+                        dayDto.setName(wd.getName());
+                        dayDto.setDescription(wd.getDescription());
+                        dayDto.setImage(wd.getImage());
+                        dayDto.setExpectedTime(wd.getExpectedTime());
+                        days.add(dayDto);
+                    }
+                    workoutPlan.setWorkoutDays(days);
+
+
                     workoutPlan.setPicture(w.getPicture());
                     workoutPlan.setName(w.getName());
                     workoutPlan.setDescription(w.getDescription());
@@ -118,7 +131,20 @@ public class WorkoutPlanController {
 
                     if(w.getId() == id) {
                         WorkoutPlanResponse workoutPlan = new WorkoutPlanResponse();
-                        workoutPlan.setWorkoutDays(w.getWorkoutDays());
+
+
+
+                        List<WorkoutDayResponse> days = new ArrayList<>();
+                        for (WorkoutDay wd : w.getWorkoutDays()) {
+                            WorkoutDayResponse dayDto = new WorkoutDayResponse();
+                            dayDto.setName(wd.getName());
+                            dayDto.setDescription(wd.getDescription());
+                            dayDto.setImage(wd.getImage());
+                            dayDto.setExpectedTime(wd.getExpectedTime());
+                            days.add(dayDto);
+                        }
+                        workoutPlan.setWorkoutDays(days);
+
                         workoutPlan.setPicture(w.getPicture());
                         workoutPlan.setName(w.getName());
                         workoutPlan.setDescription(w.getDescription());
@@ -212,10 +238,6 @@ public class WorkoutPlanController {
             if (request.getPicture() != null) {
                 workoutPlan.setPicture(request.getPicture());
             }
-            if (request.getWorkoutDays() != null) {
-                workoutPlan.setWorkoutDays(request.getWorkoutDays());
-            }
-
             workoutPlanRepository.save(workoutPlan);
             return ResponseEntity.status(HttpStatus.OK).body(
                     "workoutPlan is Edited"

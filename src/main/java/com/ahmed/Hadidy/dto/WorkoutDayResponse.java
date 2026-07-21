@@ -22,11 +22,11 @@ public class WorkoutDayResponse {
 
     private String name ;
 
-    private int totalExercises;
+    private Integer totalExercises;
 
-    private int totalRepeat;
+    private Integer totalRepeat;
 
-    private double expectedTime ;
+    private Double expectedTime ;
 
     private String description ;
 
@@ -34,7 +34,7 @@ public class WorkoutDayResponse {
 
     private Long workoutPlanId;
 
-    private Set<Exercise> exercises ;
+    private Set<ExerciseResponse> exercises = null ;
 
 
 }
