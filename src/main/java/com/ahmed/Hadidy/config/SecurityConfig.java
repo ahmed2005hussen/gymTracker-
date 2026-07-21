@@ -23,7 +23,14 @@ public class SecurityConfig {
                                 "/api/workoutplan/list/{id}" , "/api/workoutplan/delete/{id}"
                                 , "/api/workoutplan/edit/{id}", "/api/workoutday/create" ,
                                 "/api/workoutday/list/{workoutplanid}", "/api/workoutday/list/{workoutPlanId}/{workoutDayId}",
-                                "/api/workoutday/delete/{workoutPlanId}/{workoutDayId}" , "/api/workoutday/edit/{workoutPlanId}/{workoutDayId}").authenticated()
+                                "/api/workoutday/delete/{workoutPlanId}/{workoutDayId}" , "/api/workoutday/edit/{workoutPlanId}/{workoutDayId}"
+                                ,"/api/exercise/create" , "/api/exercise/list/{workoutplanid}/{workoutDay}",
+                                "/api/exercise/list/{workoutPlanId}/{workoutDayId}/{exerciseId}" , "/api/exercise/delete/{workoutPlanId}/{workoutDayId}/{exerciseId}" ,
+                                "/api/exercise/edit/{workoutPlanId}/{workoutDayId}/{exerciseId}"
+
+
+
+                        ).authenticated()
                         .anyRequest().authenticated()
 
         );

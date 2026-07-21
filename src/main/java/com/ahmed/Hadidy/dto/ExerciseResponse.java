@@ -24,5 +24,4 @@ public class ExerciseResponse {
 
     private Long workoutDayId;
 
-
 }

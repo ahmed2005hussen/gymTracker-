@@ -1,9 +1,12 @@
 package com.ahmed.Hadidy.controllers;
 
+import com.ahmed.Hadidy.dto.ExerciseResponse;
 import com.ahmed.Hadidy.dto.WorkoutDayResponse;
+import com.ahmed.Hadidy.entity.Exercise;
 import com.ahmed.Hadidy.entity.User;
 import com.ahmed.Hadidy.entity.WorkoutDay;
 import com.ahmed.Hadidy.entity.WorkoutPlan;
+import com.ahmed.Hadidy.repository.ExerciseRepository;
 import com.ahmed.Hadidy.repository.UserRepository;
 import com.ahmed.Hadidy.repository.WorkoutDayRepository;
 import com.ahmed.Hadidy.repository.WorkoutPlanRepository;
@@ -14,7 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/exercise")
@@ -29,9 +34,10 @@ public class ExerciseController {
     final private UserRepository userRepository;
     final private WorkoutPlanRepository workoutPlanRepository;
     final private WorkoutDayRepository workoutDayRepository;
+    final private ExerciseRepository exerciseRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createWorkoutDay(@RequestBody WorkoutDayResponse Dto
+    public ResponseEntity<?> createExercise(@RequestBody ExerciseResponse Dto
             , Authentication authentication) {
 
         try {
@@ -40,43 +46,46 @@ public class ExerciseController {
                     () -> new RuntimeException("User not Found")
             );
 
-            WorkoutPlan w = workoutPlanRepository.findById(Dto.getWorkoutPlanId()).orElseThrow(
+            WorkoutDay w = workoutDayRepository.findById(Dto.getWorkoutDayId()).orElseThrow(
                     () -> new RuntimeException("not found")
             );
 
-            if (w.getProfile().getId() != user.getId()) {
+            if (w.getWorkoutPlan().getProfile().getId() != user.getId()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         "Not found"
                 );
             }
 
-            WorkoutDay workoutDay = new WorkoutDay();
-            workoutDay.setWorkoutPlan(w);
-            workoutDay.setImage(Dto.getImage());
-            workoutDay.setName(Dto.getName());
-            workoutDay.setDescription(Dto.getDescription());
-            workoutDay.setExpectedTime(Dto.getExpectedTime());
-            workoutDay.setTotalRepeat(Dto.getTotalRepeat());
-            workoutDay.setTotalExercises(Dto.getTotalExercises());
-            WorkoutDay saved = workoutDayRepository.save(workoutDay);
+            Exercise exercise = new Exercise();
+            exercise.setRepeat(Dto.getRepeat());
+            exercise.setSets(Dto.getSets());
+            exercise.setName(Dto.getName());
+            exercise.setDescription(Dto.getDescription());
+            exercise.setPicture(Dto.getPicture());
+            exercise.setWorkoutDay(w);
+
+
+            Exercise saved = exerciseRepository.save(exercise);
 
             if (saved.getId() > 0) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(
-                        "Workout Day is created"
+                        "Exercise is created"
                 );
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not Created");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error" + e.getMessage());
 
         }
 
     }
 
 
-    @GetMapping("/list/{workoutplanid}")
-    public ResponseEntity<?> listWorkoutPlan(Authentication authentication, @PathVariable long workoutplanid) {
+    @GetMapping("/list/{workoutplanid}/{workoutDayid}")
+    public ResponseEntity<?> listWorkoutPlan(Authentication authentication,
+                                             @PathVariable long workoutplanid
+            , @PathVariable long workoutDayid) {
         try {
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(
@@ -93,30 +102,36 @@ public class ExerciseController {
                 );
             }
 
-            List<WorkoutDayResponse> result = new ArrayList<>();
+            List<WorkoutDay> workoutDays = workoutDayRepository.findByWorkoutPlanId(workoutplanid);
+
+            Set<Exercise> result = new HashSet<>();
+
+            for (WorkoutDay w : workoutDays) {
+                if (w.getId() == workoutDayid) {
+                    result = w.getExercises();
+                    break;
+                }
+            }
+
+            List<ExerciseResponse> res = new ArrayList<>();
+
+            for (Exercise e : result) {
 
 
-            for (WorkoutDay w : workoutPlan.getWorkoutDays()) {
+                ExerciseResponse dto = new ExerciseResponse();
 
+                dto.setRepeat(e.getRepeat());
+                dto.setSets(e.getSets());
+                dto.setName(e.getName());
+                dto.setDescription(e.getDescription());
+                dto.setPicture(e.getPicture());
+                dto.setWorkoutDayId(workoutDayid);
 
-                WorkoutDayResponse dto = new WorkoutDayResponse();
-
-                dto.setImage(w.getImage());
-
-
-                // set Exercises
-                //  dto.setExercises(w.getExercises());
-                dto.setName(w.getName());
-                dto.setDescription(w.getDescription());
-                dto.setTotalRepeat(w.getTotalRepeat());
-                dto.setTotalExercises(w.getTotalExercises());
-                dto.setExpectedTime(w.getExpectedTime());
-
-                result.add(dto);
+                res.add(dto);
             }
 
             return ResponseEntity.status(HttpStatus.OK).body(
-                    result
+                    res
             );
 
         } catch (Exception e) {
@@ -127,35 +142,53 @@ public class ExerciseController {
 
     }
 
-    @GetMapping("/list/{workoutPlanId}/{workoutDayId}")
+    @GetMapping("/list/{workoutPlanId}/{workoutDayId}/{exerciseId}")
     public ResponseEntity<?> getWorkoutDay(Authentication authentication,
                                            @PathVariable Long workoutPlanId,
-                                           @PathVariable Long workoutDayId) {
+                                           @PathVariable Long workoutDayId,
+                                           @PathVariable Long exerciseId) {
         try {
             String username = authentication.getName();
             User user = userRepository.findByUsername(username).orElseThrow(
                     () -> new RuntimeException("User not Found")
             );
 
-            WorkoutPlan workoutPlan = workoutPlanRepository.findById(workoutPlanId)
-                    .orElseThrow(() -> new RuntimeException("Not Found"));
+            WorkoutPlan workoutPlan = workoutPlanRepository.findById(workoutPlanId).orElseThrow(
+                    () -> new RuntimeException("Not found")
+            );
 
-            if (!workoutPlan.getProfile().getId().equals(user.getProfile().getId())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Not Authorized");
+            if (!workoutPlan.getProfile().getId().equals(user.getId())) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                        "Not Found "
+                );
             }
 
-            for (WorkoutDay wd : workoutPlan.getWorkoutDays()) {
-                if (wd.getId().equals(workoutDayId)) {
-                    WorkoutDayResponse dto = new WorkoutDayResponse();
-                    dto.setName(wd.getName());
-                    dto.setDescription(wd.getDescription());
-                    dto.setImage(wd.getImage());
-                    dto.setExpectedTime(wd.getExpectedTime());
-                    dto.setTotalRepeat(wd.getTotalRepeat());
-                    dto.setTotalExercises(wd.getTotalExercises());
-                    //   dto.setExercises(wd.getExercises());
-                    // exercises
-                    return ResponseEntity.status(HttpStatus.OK).body(dto);
+            List<WorkoutDay> workoutDays = workoutDayRepository.findByWorkoutPlanId(workoutPlanId);
+
+            Set<Exercise> result = new HashSet<>();
+
+            for (WorkoutDay w : workoutDays) {
+                if (w.getId() == workoutDayId) {
+                    result = w.getExercises();
+                    break;
+                }
+            }
+
+            for (Exercise e : result) {
+
+                if (e.getId() == exerciseId) {
+                    ExerciseResponse dto = new ExerciseResponse();
+
+                    dto.setRepeat(e.getRepeat());
+                    dto.setSets(e.getSets());
+                    dto.setName(e.getName());
+                    dto.setDescription(e.getDescription());
+                    dto.setPicture(e.getPicture());
+                    dto.setWorkoutDayId(workoutDayId);
+
+                    return ResponseEntity.status(HttpStatus.OK).body(
+                            dto
+                    );
                 }
             }
 
@@ -166,9 +199,11 @@ public class ExerciseController {
         }
     }
 
-    @DeleteMapping("delete/{workoutPlanId}/{workoutDayId}")
+
+    @DeleteMapping("delete/{workoutPlanId}/{workoutDayId}/{exerciseId}")
     public ResponseEntity<?> deleteWorkoutDay(@PathVariable Long workoutPlanId,
                                               @PathVariable Long workoutDayId,
+                                              @PathVariable Long exerciseId,
                                               Authentication authentication) {
 
         try {
@@ -177,20 +212,32 @@ public class ExerciseController {
                     () -> new RuntimeException("User not Found")
             );
 
-            WorkoutPlan workoutPlan = workoutPlanRepository.findById(workoutPlanId)
-                    .orElseThrow(() -> new RuntimeException("Not Found"));
+            WorkoutPlan workoutPlan = workoutPlanRepository.findById(workoutPlanId).orElseThrow(
+                    () -> new RuntimeException("Not found")
+            );
 
-            if (!workoutPlan.getProfile().getId().equals(user.getProfile().getId())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Not Authorized");
+            if (!workoutPlan.getProfile().getId().equals(user.getId())) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                        "Not Found "
+                );
             }
 
             List<WorkoutDay> workoutDays = workoutDayRepository.findByWorkoutPlanId(workoutPlanId);
 
+            Set<Exercise> result = new HashSet<>();
 
             for (WorkoutDay w : workoutDays) {
-
                 if (w.getId() == workoutDayId) {
-                    workoutDayRepository.deleteById(workoutDayId);
+                    result = w.getExercises();
+                    break;
+                }
+            }
+
+            for (Exercise e : result) {
+
+                if (e.getId() == exerciseId) {
+
+                    exerciseRepository.deleteById(e.getId());
                     return ResponseEntity.status(HttpStatus.OK).body(
                             "was Deleted"
                     );
@@ -210,12 +257,13 @@ public class ExerciseController {
 
     }
 
-    @PatchMapping("/edit/{workoutPlanId}/{workoutDayId}")
+    @PatchMapping("/edit/{workoutPlanId}/{workoutDayId}/{exerciseId}")
     ResponseEntity<String> editWorkoutPlan(@PathVariable Long workoutPlanId,
-                                           @PathVariable Long workoutDayId
-            , @RequestBody WorkoutDayResponse request,
+                                           @PathVariable Long workoutDayId,
+                                           @PathVariable Long exerciseId
+            , @RequestBody ExerciseResponse request,
                                            Authentication authentication
-    ) {
+                                          ) {
         try {
 
             String username = authentication.getName();
@@ -223,42 +271,52 @@ public class ExerciseController {
                     () -> new RuntimeException("User not Found")
             );
 
-            WorkoutPlan workoutPlan = workoutPlanRepository.findById(workoutPlanId)
-                    .orElseThrow(() -> new RuntimeException("Not Found"));
+            WorkoutPlan workoutPlan = workoutPlanRepository.findById(workoutPlanId).orElseThrow(
+                    () -> new RuntimeException("Not found")
+            );
 
-            if (!workoutPlan.getProfile().getId().equals(user.getProfile().getId())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Not Authorized");
+            if (!workoutPlan.getProfile().getId().equals(user.getId())) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                        "Not Found "
+                );
             }
 
             List<WorkoutDay> workoutDays = workoutDayRepository.findByWorkoutPlanId(workoutPlanId);
 
+            Set<Exercise> result = new HashSet<>();
 
             for (WorkoutDay w : workoutDays) {
-
                 if (w.getId() == workoutDayId) {
+                    result = w.getExercises();
+                    break;
+                }
+            }
 
 
-                    if (request.getImage() != null) {
-                        w.setImage(request.getImage());
+            for (Exercise e : result) {
+
+                if (e.getId() == exerciseId) {
+
+
+                    if (request.getRepeat() != null) {
+                        e.setRepeat(request.getRepeat());
                     }
                     if (request.getName() != null) {
-                        w.setName(request.getName());
+                        e.setName(request.getName());
                     }
                     if (request.getDescription() != null) {
-                        w.setDescription(request.getDescription());
+                        e.setDescription(request.getDescription());
                     }
-                    if (request.getExpectedTime() != null) {
-                        w.setExpectedTime(request.getExpectedTime());
+                    if (request.getSets() != null) {
+                        e.setSets(request.getSets());
                     }
-                    if (request.getTotalRepeat() != null) {
-                        w.setTotalRepeat(request.getTotalRepeat());
+                    if (request.getPicture() != null) {
+                        e.setPicture(request.getPicture());
                     }
-                    if (request.getTotalExercises() != null) {
-                        w.setTotalExercises(request.getTotalExercises());
-                    }
-                    workoutDayRepository.save(w);
+
+                    exerciseRepository.save(e);
                     return ResponseEntity.status(HttpStatus.OK).body(
-                            "workoutDay is Edited"
+                            "exercise is Edited"
                     );
 
                 }
@@ -267,7 +325,6 @@ public class ExerciseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     "Not found"
             );
-
 
 
         } catch (Exception e) {

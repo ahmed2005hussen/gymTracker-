@@ -23,7 +23,7 @@ public class Exercise {
     @Column(name ="description")
     private String description ;
 
-    @Column(name ="repeat")
+    @Column(name ="reps")
     private int repeat ;
 
     @Column(name ="sets")
