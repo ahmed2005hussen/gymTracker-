@@ -1,7 +1,8 @@
 package com.ahmed.Hadidy.entity;
+
 import com.ahmed.Hadidy.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
     @Id
@@ -24,6 +24,7 @@ public class User {
     private String username ;
 
     @Column(name = "password")
+    @Size(min = 8)
     private String password ;
 
     @Enumerated(EnumType.STRING)
@@ -34,4 +35,18 @@ public class User {
 
     @OneToOne(mappedBy = "user"  , cascade = CascadeType.ALL)
     private Profile profile ;
+
+
+    public User(String username , String password , Role role , boolean enabled){
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.enabled = enabled ;
+    }
+
+    public User(String username , String password){
+        this.username = username;
+        this.password = password;
+
+    }
 }
