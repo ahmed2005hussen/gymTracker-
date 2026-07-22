@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Hadidy</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.welcome { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+.welcome span { color: var(--accent); font-weight: 500; }
+.quick-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 2rem; }
+.activity-list { display: flex; flex-direction: column; gap: 10px; }
+.activity-item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card2); border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+}
+.activity-icon { font-size: 20px; width: 36px; text-align: center; }
+.activity-info { flex: 1; }
+.activity-title { font-size: 14px; font-weight: 500; }
+.activity-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.activity-time { font-size: 11px; color: var(--muted); }
+.bmi-box {
+  background: var(--accent-dim); border: 0.5px solid var(--accent-border);
+  border-radius: 10px; padding: 1rem; margin-top: 12px;
+}
+.bmi-label { font-size: 12px; color: var(--accent); margin-bottom: 4px; }
+.bmi-value { font-size: 28px; font-weight: 500; }
+.bmi-status { font-size: 12px; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">H</div>
+    <span class="logo-text">Ha<span>didy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="Dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="Workouts.html">Workouts</a></li>
+    <li><a href="Diet.html">Diet</a></li>
+    <li><a href="Progress.html">Progress</a></li>
+    <li><a href="Community.html">Community</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="Login.html" class="btn btn-ghost btn-sm">Log in</a>
+    <a href="Register.html" class="btn btn-primary btn-sm">Register</a>
+  </div>
+</nav>
+
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Main</div>
+      <a href="Dashboard.html" class="sidebar-link active">
+        <span class="icon">🏠</span> Dashboard
+      </a>
+      <a href="Workouts.html" class="sidebar-link">
+        <span class="icon">🏋️</span> Workouts
+      </a>
+      <a href="Diet.html" class="sidebar-link">
+        <span class="icon">🥗</span> Diet
+      </a>
+      <a href="Progress.html" class="sidebar-link">
+        <span class="icon">📈</span> Progress
+      </a>
+      <a href="Supplements.html" class="sidebar-link">
+        <span class="icon">💊</span> Supplements
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Social</div>
+      <a href="Community.html" class="sidebar-link">
+        <span class="icon">👥</span> Community
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Account</div>
+      <a href="Profile.html" class="sidebar-link">
+        <span class="icon">👤</span> Profile
+      </a>
+      <a href="Login.html" class="sidebar-link" onclick="logout()">
+        <span class="icon">🚪</span> Log out
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="welcome">Good morning, <span id="welcomeName">Ahmed</span> 💪</div>
+
+    <div class="page-header-row" style="margin-bottom:1.5rem;">
+      <div>
+        <h1 style="font-size:22px; font-weight:500;">Dashboard</h1>
+        <p style="font-size:13px; color:var(--muted); margin-top:4px;">Here's your fitness overview</p>
+      </div>
+      <a href="Workouts.html" class="btn btn-primary btn-sm">+ New workout</a>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-icon">🏋️</div>
+        <div class="stat-label">Workout plans</div>
+        <div class="stat-value" id="statPlans">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🥗</div>
+        <div class="stat-label">Diet plans</div>
+        <div class="stat-value" id="statDiet">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💊</div>
+        <div class="stat-label">Supplements</div>
+        <div class="stat-value" id="statSupps">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📸</div>
+        <div class="stat-label">Progress logs</div>
+        <div class="stat-value" id="statProgress">0</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-size:15px; font-weight:500; margin-bottom:1rem;">Recent activity</h3>
+        <div class="activity-list" id="activityList">
+          <div class="activity-item">
+            <div class="activity-icon">🏋️</div>
+            <div class="activity-info">
+              <div class="activity-title">No activity yet</div>
+              <div class="activity-sub">Start by creating a workout plan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3 style="font-size:15px; font-weight:500; margin-bottom:1rem;">Your stats</h3>
+          <div style="display:flex; gap:12px;">
+            <div style="flex:1;">
+              <div style="font-size:12px; color:var(--muted);">Weight</div>
+              <div style="font-size:22px; font-weight:500;" id="statWeight">—</div>
+              <div style="font-size:12px; color:var(--muted);">kg</div>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:12px; color:var(--muted);">Height</div>
+              <div style="font-size:22px; font-weight:500;" id="statHeight">—</div>
+              <div style="font-size:12px; color:var(--muted);">cm</div>
+            </div>
+          </div>
+          <div class="bmi-box" id="bmiBox" style="display:none;">
+            <div class="bmi-label">BMI</div>
+            <div class="bmi-value" id="bmiValue">—</div>
+            <div class="bmi-status" id="bmiStatus"></div>
+          </div>
+          <div class="divider"></div>
+          <div style="font-size:13px; color:var(--muted);">Goal</div>
+          <div style="font-size:15px; font-weight:500; margin-top:4px;" id="statGoal">—</div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+          <h3 style="font-size:15px; font-weight:500; margin-bottom:1rem;">Quick actions</h3>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <a href="Workouts.html" class="btn btn-ghost" style="justify-content:flex-start;">🏋️ Add workout plan</a>
+            <a href="Diet.html" class="btn btn-ghost" style="justify-content:flex-start;">🥗 Add diet plan</a>
+            <a href="Progress.html" class="btn btn-ghost" style="justify-content:flex-start;">📸 Log progress</a>
+            <a href="Supplements.html" class="btn btn-ghost" style="justify-content:flex-start;">💊 Add supplement</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const user = JSON.parse(localStorage.getItem('hadidy_user') || '{}');
+if (user.username) {
+  document.getElementById('welcomeName').textContent = user.username;
+  document.getElementById('navAvatar').textContent = user.username[0].toUpperCase();
+}
+if (user.weight) document.getElementById('statWeight').textContent = user.weight;
+if (user.height) document.getElementById('statHeight').textContent = user.height;
+if (user.goal) document.getElementById('statGoal').textContent = user.goal;
+if (user.weight && user.height) {
+  const h = user.height / 100;
+  const bmi = (user.weight / (h * h)).toFixed(1);
+  document.getElementById('bmiValue').textContent = bmi;
+  let status = bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal weight ✓' : bmi < 30 ? 'Overweight' : 'Obese';
+  document.getElementById('bmiStatus').textContent = status;
+  document.getElementById('bmiBox').style.display = 'block';
+}
+const plans = JSON.parse(localStorage.getItem('hadidy_workout_plans') || '[]');
+const diets = JSON.parse(localStorage.getItem('hadidy_diet_plans') || '[]');
+const supps = JSON.parse(localStorage.getItem('hadidy_supplements') || '[]');
+const prog = JSON.parse(localStorage.getItem('hadidy_progress') || '[]');
+document.getElementById('statPlans').textContent = plans.length;
+document.getElementById('statDiet').textContent = diets.length;
+document.getElementById('statSupps').textContent = supps.length;
+document.getElementById('statProgress').textContent = prog.length;
+
+function logout() { localStorage.removeItem('hadidy_logged_in'); }
+</script>
+</body>
+</html>

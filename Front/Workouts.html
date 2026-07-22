@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workouts — Hadidy</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.plan-card {
+  background: var(--card); border: 0.5px solid var(--border);
+  border-radius: 14px; padding: 1.25rem; transition: border-color 0.2s;
+}
+.plan-card:hover { border-color: rgba(200,169,110,0.3); }
+.plan-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.plan-name { font-size: 16px; font-weight: 500; }
+.plan-desc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+.plan-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.plan-footer { display: flex; gap: 8px; }
+.day-card {
+  background: var(--card2); border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 1rem; margin-top: 8px;
+}
+.day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.day-name { font-size: 14px; font-weight: 500; }
+.exercise-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 0.5px solid var(--border);
+  font-size: 13px;
+}
+.exercise-item:last-child { border-bottom: none; }
+.ex-info { flex: 1; }
+.ex-name { font-weight: 500; }
+.ex-meta { color: var(--muted); font-size: 12px; }
+.plan-actions { display: flex; gap: 6px; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">H</div>
+    <span class="logo-text">Ha<span>didy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="Dashboard.html">Dashboard</a></li>
+    <li><a href="Workouts.html" class="active">Workouts</a></li>
+    <li><a href="Diet.html">Diet</a></li>
+    <li><a href="Progress.html">Progress</a></li>
+    <li><a href="Community.html">Community</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="Profile.html" class="nav-avatar" id="navAvatar">A</a>
+  </div>
+</nav>
+
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Main</div>
+      <a href="Dashboard.html" class="sidebar-link"><span class="icon">🏠</span> Dashboard</a>
+      <a href="Workouts.html" class="sidebar-link active"><span class="icon">🏋️</span> Workouts</a>
+      <a href="Diet.html" class="sidebar-link"><span class="icon">🥗</span> Diet</a>
+      <a href="Progress.html" class="sidebar-link"><span class="icon">📈</span> Progress</a>
+      <a href="Supplements.html" class="sidebar-link"><span class="icon">💊</span> Supplements</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Social</div>
+      <a href="Community.html" class="sidebar-link"><span class="icon">👥</span> Community</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Account</div>
+      <a href="Profile.html" class="sidebar-link"><span class="icon">👤</span> Profile</a>
+      <a href="Login.html" class="sidebar-link"><span class="icon">🚪</span> Log out</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header-row" style="margin-bottom:1.5rem;">
+      <div>
+        <h1 style="font-size:22px; font-weight:500;">Workout Plans</h1>
+        <p style="font-size:13px; color:var(--muted); margin-top:4px;">Build and manage your training programs</p>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('planModal')">+ New plan</button>
+    </div>
+
+    <div class="grid-2" id="plansGrid">
+      <div class="empty" style="grid-column:1/-1;">
+        <div class="empty-icon">🏋️</div>
+        <h3>No workout plans yet</h3>
+        <p>Create your first workout plan to get started</p>
+        <button class="btn btn-primary" onclick="openModal('planModal')">Create plan</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Create Plan Modal -->
+<div class="modal-overlay" id="planModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">New workout plan</span>
+      <button class="modal-close" onclick="closeModal('planModal')">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Plan name</label>
+      <input type="text" id="planName" placeholder="e.g. Push Pull Legs" style="padding-left:12px" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="planDesc" placeholder="Describe your plan..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Visibility</label>
+      <select id="planPublic" style="padding-left:12px">
+        <option value="false">Private 🔒</option>
+        <option value="true">Public 🌍</option>
+      </select>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModal('planModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="createPlan()">Create plan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Day Modal -->
+<div class="modal-overlay" id="dayModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Add workout day</span>
+      <button class="modal-close" onclick="closeModal('dayModal')">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Day name</label>
+      <input type="text" id="dayName" placeholder="e.g. Chest Day, Back Day" style="padding-left:12px" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" id="dayDesc" placeholder="e.g. Focus on upper chest" style="padding-left:12px" />
+    </div>
+    <div class="form-group">
+      <label>Expected time (minutes)</label>
+      <input type="number" id="dayTime" placeholder="60" style="padding-left:12px" />
+    </div>
+    <div style="display:flex; gap:10px; margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModal('dayModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addDay()">Add day</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Exercise Modal -->
+<div class="modal-overlay" id="exModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Add exercise</span>
+      <button class="modal-close" onclick="closeModal('exModal')">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Exercise name</label>
+      <input type="text" id="exName" placeholder="e.g. Bench Press" style="padding-left:12px" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" id="exDesc" placeholder="How to perform it..." style="padding-left:12px" />
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="form-group">
+        <label>Sets</label>
+        <input type="number" id="exSets" placeholder="4" style="padding-left:12px" />
+      </div>
+      <div class="form-group">
+        <label>Reps</label>
+        <input type="number" id="exReps" placeholder="12" style="padding-left:12px" />
+      </div>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModal('exModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addExercise()">Add exercise</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let plans = JSON.parse(localStorage.getItem('hadidy_workout_plans') || '[]');
+let activePlanIdx = null;
+let activeDayIdx = null;
+
+const user = JSON.parse(localStorage.getItem('hadidy_user') || '{}');
+if (user.username) document.getElementById('navAvatar').textContent = user.username[0].toUpperCase();
+
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function save() { localStorage.setItem('hadidy_workout_plans', JSON.stringify(plans)); }
+
+function createPlan() {
+  const name = document.getElementById('planName').value.trim();
+  if (!name) return;
+  plans.push({ name, desc: document.getElementById('planDesc').value, isPublic: document.getElementById('planPublic').value === 'true', days: [] });
+  save(); closeModal('planModal');
+  document.getElementById('planName').value = '';
+  document.getElementById('planDesc').value = '';
+  render();
+}
+
+function addDay() {
+  const name = document.getElementById('dayName').value.trim();
+  if (!name) return;
+  plans[activePlanIdx].days.push({ name, desc: document.getElementById('dayDesc').value, time: document.getElementById('dayTime').value, exercises: [] });
+  save(); closeModal('dayModal');
+  document.getElementById('dayName').value = '';
+  document.getElementById('dayDesc').value = '';
+  document.getElementById('dayTime').value = '';
+  render();
+}
+
+function addExercise() {
+  const name = document.getElementById('exName').value.trim();
+  if (!name) return;
+  plans[activePlanIdx].days[activeDayIdx].exercises.push({
+    name, desc: document.getElementById('exDesc').value,
+    sets: document.getElementById('exSets').value,
+    reps: document.getElementById('exReps').value
+  });
+  save(); closeModal('exModal');
+  document.getElementById('exName').value = '';
+  document.getElementById('exDesc').value = '';
+  document.getElementById('exSets').value = '';
+  document.getElementById('exReps').value = '';
+  render();
+}
+
+function deletePlan(i) {
+  if (confirm('Delete this plan?')) { plans.splice(i, 1); save(); render(); }
+}
+
+function render() {
+  const grid = document.getElementById('plansGrid');
+  if (plans.length === 0) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1;"><div class="empty-icon">🏋️</div><h3>No workout plans yet</h3><p>Create your first workout plan to get started</p><button class="btn btn-primary" onclick="openModal('planModal')">Create plan</button></div>`;
+    return;
+  }
+  grid.innerHTML = plans.map((p, i) => `
+    <div class="plan-card">
+      <div class="plan-header">
+        <div>
+          <div class="plan-name">${p.name}</div>
+          <span class="badge ${p.isPublic ? 'badge-accent' : 'badge-muted'}" style="margin-top:4px;">${p.isPublic ? '🌍 Public' : '🔒 Private'}</span>
+        </div>
+        <div class="plan-actions">
+          <button class="btn btn-ghost btn-sm" onclick="activePlanIdx=${i}; openModal('dayModal')">+ Day</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePlan(${i})">Delete</button>
+        </div>
+      </div>
+      ${p.desc ? `<div class="plan-desc">${p.desc}</div>` : ''}
+      ${p.days.length === 0 ? `<div style="font-size:13px; color:var(--muted); padding:8px 0;">No days yet — add your first workout day</div>` :
+        p.days.map((d, di) => `
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-name">🗓 ${d.name} ${d.time ? `<span style="font-size:11px; color:var(--muted); font-weight:400;">· ${d.time} min</span>` : ''}</div>
+              <button class="btn btn-ghost btn-sm" onclick="activePlanIdx=${i}; activeDayIdx=${di}; openModal('exModal')">+ Exercise</button>
+            </div>
+            ${d.exercises.length === 0 ? `<div style="font-size:12px; color:var(--muted);">No exercises yet</div>` :
+              d.exercises.map(e => `
+                <div class="exercise-item">
+                  <div style="font-size:18px;">💪</div>
+                  <div class="ex-info">
+                    <div class="ex-name">${e.name}</div>
+                    <div class="ex-meta">${e.sets ? e.sets + ' sets' : ''} ${e.reps ? '× ' + e.reps + ' reps' : ''} ${e.desc ? '· ' + e.desc : ''}</div>
+                  </div>
+                </div>
+              `).join('')}
+            `}
+          </div>
+        `).join('')}
+    </div>
+  `).join('');
+}
+
+render();
+</script>
+</body>
+</html>

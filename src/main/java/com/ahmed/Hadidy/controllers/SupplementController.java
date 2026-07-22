@@ -1,15 +1,10 @@
 package com.ahmed.Hadidy.controllers;
 
 import com.ahmed.Hadidy.dto.SupplementResponse;
-import com.ahmed.Hadidy.dto.WorkoutDayResponse;
-import com.ahmed.Hadidy.dto.WorkoutPlanResponse;
 import com.ahmed.Hadidy.entity.Supplement;
 import com.ahmed.Hadidy.entity.User;
-import com.ahmed.Hadidy.entity.WorkoutDay;
-import com.ahmed.Hadidy.entity.WorkoutPlan;
 import com.ahmed.Hadidy.repository.SupplementRepository;
 import com.ahmed.Hadidy.repository.UserRepository;
-import com.ahmed.Hadidy.repository.WorkoutPlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
