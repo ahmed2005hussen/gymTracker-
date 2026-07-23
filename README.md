@@ -1,142 +1,191 @@
-# Hadidy
+# 🏋️ Hadidy - Gym Tracker Backend
 
-Hadidy is a fitness-management application for organizing workouts, nutrition, supplements, and personal fitness information. It includes a Spring Boot REST API backed by MySQL and a lightweight HTML/CSS/JavaScript dashboard in [`Front/`](Front/).
+A backend REST API for a Gym Tracking platform built with **Java** and **Spring Boot**. The application helps users manage workout plans, exercises, diet plans, meals, supplements, and personal profiles while providing secure authentication and a clean layered architecture.
 
-## Features
+---
 
-### Account and security
+## 🚀 Features
 
-- Register users with username and password validation (minimum eight-character password).
-- Prevent duplicate usernames.
-- Change the authenticated user's password after verifying the current password.
-- Store passwords with Spring Security's delegating password encoder.
-- Authenticate protected API endpoints with HTTP Basic authentication.
-- Return structured errors for validation failures, duplicate usernames, incorrect passwords, and missing users.
-- CORS support for local frontend development servers (`localhost:3000`, `localhost:5173`, and port `5500`).
+- 🔐 User Authentication with Spring Security
+- 👤 User Profile Management
+- 💪 Workout Plans & Workout Days Management
+- 🏃 Exercise Management
+- 🥗 Diet Plans & Meals Management
+- 💊 Supplements Management
+- ✅ Request Validation
+- ⚠️ Global Exception Handling
+- 📦 DTO-based API Responses
+- 🗄️ MySQL Database Integration
+- 🏛️ Layered Architecture (Controller → Service → Repository)
 
-### Profile management
+---
 
-- Retrieve the signed-in user's profile.
-- Update name, email, goal, profile picture, subscription dates, gym price, height, and weight.
-- Calculate BMI automatically when both height and weight are available.
+## 🛠️ Tech Stack
 
-### Workout planning
+### Backend
 
-- Create, view, edit, and delete personal workout plans.
-- Add workout days to a plan, including image, description, expected duration, total exercises, and total repetitions.
-- View, edit, and remove individual workout days.
-- Add exercises to workout days with sets, repetitions, description, and picture.
-- View, edit, and remove exercises.
-- Enforce ownership checks so users can manage only their own workout plans, days, and exercises.
+- Java 21
+- Spring Boot
+- Spring MVC
+- Spring Security
+- Spring Data JPA
+- Hibernate
 
-### Diet and meals
+### Database
 
-- Create, list, view, edit, and delete personal diet plans.
-- Add meals to diet plans with recipe, photo, meal time, calories, protein, carbohydrates, and fats.
-- View, edit, and delete meals.
-- Restrict diet plans and meals to their owner.
+- MySQL
 
-### Supplement tracking
+### Build Tool
 
-- Create, list, view, edit, and delete personal supplements.
-- Store a supplement's name, description, price, and picture.
+- Maven
 
-### Frontend prototype
+### Tools
 
-The static dashboard provides pages for onboarding, login/register, workout plans, diet plans, supplements, profile settings, a progress log, and community posts. The progress, community, and dashboard interactions currently use browser `localStorage`; they are not yet connected to API endpoints.
+- IntelliJ IDEA
+- Postman
+- Git
+- GitHub
 
-## Tech stack
+---
 
-- Java 25 and Spring Boot 4
-- Spring Web MVC, Spring Data JPA, Spring Security, and Bean Validation
-- MySQL (runtime) with H2 included as an alternative runtime dependency
-- Lombok
-- springdoc OpenAPI / Swagger UI
-- Maven Wrapper
-- HTML, CSS, and vanilla JavaScript frontend
+## 📂 Project Structure
 
-## Getting started
+```
+src
+ ├── config
+ ├── controllers
+ ├── dto
+ ├── entity
+ ├── exceptions
+ ├── repository
+ ├── service
+ └── HadidyApplication.java
+```
 
-### Prerequisites
+---
 
-- JDK 25
-- MySQL running locally or accessible over the network
+## 📚 Main Modules
+
+- User
+- Profile
+- Workout Plan
+- Workout Day
+- Exercise
+- Diet Plan
+- Meal
+- Supplement
+- Progress Tracking
+
+---
+
+## 🔒 Security
+
+The project uses **Spring Security** to secure application endpoints and manage user authentication.
+
+Current implementation includes:
+
+- User authentication
+- Password encryption
+- Role-based foundation
+- Protected endpoints
+
+---
+
+## 📡 REST APIs
+
+The project exposes REST APIs for managing:
+
+- Users
+- Profiles
+- Workout Plans
+- Workout Days
+- Exercises
+- Diet Plans
+- Meals
+- Supplements
+
+---
+
+## 🏗️ Architecture
+
+The application follows a layered architecture:
+
+```
+Controller
+     ↓
+Service
+     ↓
+Repository
+     ↓
+Database
+```
+
+This structure improves:
+
+- Maintainability
+- Scalability
+- Testability
+- Separation of Concerns
+
+---
+
+## ⚙️ Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/ahmed2005hussen/gymTracker-.git
+```
+
+### Navigate to the project
+
+```bash
+cd gymTracker-
+```
 
 ### Configure the database
 
-The application reads these environment variables, with the shown defaults:
+Update your `application.properties`:
 
-| Variable | Default |
-| --- | --- |
-| `DATABASE_HOST` | `localhost` |
-| `DATABASE_PORT` | `3306` |
-| `DATABASE_NAME` | `hadidy` |
-| `DATABASE_USERNAME` | `root` |
-| `DATABASE_PASSWORD` | `root` |
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/gymtracker
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+```
 
-Create a MySQL database named `hadidy`, or set the variables to match an existing database. Hibernate is configured with `ddl-auto=update`, so it manages the schema on startup.
-
-### Run the API
+### Run the application
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-On Windows:
-
-```bat
-mvnw.cmd spring-boot:run
-```
-
-Run the tests with:
+or
 
 ```bash
-./mvnw test
+mvn spring-boot:run
 ```
 
-When running locally, the API is normally available at `http://localhost:8080`.
+---
 
-### API documentation
+## 📈 Future Improvements
 
-- Swagger UI: `http://localhost:8080/ahmed-ui.html`
-- OpenAPI JSON: `http://localhost:8080/my-api-docs`
+- JWT Authentication
+- Role-Based Authorization
+- Swagger / OpenAPI Documentation
+- Docker Support
+- Unit & Integration Tests
+- Pagination & Sorting
+- Logging
+- File Uploads
+- Email Verification
+- Password Reset
 
-### Open the frontend
+---
 
-Serve the [`Front/`](Front/) directory with a static web server, such as the VS Code Live Server extension, then open `index.html`. The configured CORS policy supports common Live Server ports.
+## 👨‍💻 Author
 
-## API overview
+Ahmed Hussein
 
-Except for `OPTIONS` requests and the configured registration matcher, the API requires HTTP Basic authentication. Send credentials with each protected request, for example:
+- GitHub: https://github.com/ahmed2005hussen
+- LinkedIn: https://linkedin.com/in/ahmed-elsherif-119b60337/
 
-```bash
-curl -u username:password http://localhost:8080/api/workoutplan/list
-```
-
-> **Note:** The registration controller is mapped to `/api/users/register`, while the current security configuration permits `/api/user/register`. Align these paths before using unauthenticated registration in a deployed environment.
-
-| Area | Endpoints |
-| --- | --- |
-| Users | `POST /api/users/register`, `PATCH /api/users/me/password` |
-| Profile | `GET /api/profile/getprofile`, `PATCH /api/profile/editprofile` |
-| Workout plans | `POST /api/workoutplan/create`, `GET /api/workoutplan/list`, `GET /api/workoutplan/list/{id}`, `PATCH /api/workoutplan/edit/{id}`, `DELETE /api/workoutplan/delete/{id}` |
-| Workout days | `POST /api/workoutday/create`, `GET /api/workoutday/list/{workoutPlanId}`, `GET /api/workoutday/list/{workoutPlanId}/{workoutDayId}`, `PATCH /api/workoutday/edit/{workoutPlanId}/{workoutDayId}`, `DELETE /api/workoutday/delete/{workoutPlanId}/{workoutDayId}` |
-| Exercises | `POST /api/exercise/create`, `GET /api/exercise/list/{workoutPlanId}/{workoutDayId}`, `GET /api/exercise/list/{workoutPlanId}/{workoutDayId}/{exerciseId}`, `PATCH /api/exercise/edit/{workoutPlanId}/{workoutDayId}/{exerciseId}`, `DELETE /api/exercise/delete/{workoutPlanId}/{workoutDayId}/{exerciseId}` |
-| Diet plans | `POST /api/dietplan/create`, `GET /api/dietplan/list`, `GET /api/dietplan/list/{id}`, `PATCH /api/dietplan/edit/{id}`, `DELETE /api/dietplan/delete/{id}` |
-| Meals | `POST /api/meal/create`, `GET /api/meal/list/{dietPlanId}`, `GET /api/meal/list/{dietPlanId}/{mealId}`, `PATCH /api/meal/edit/{dietPlanId}/{mealId}`, `DELETE /api/meal/delete/{dietPlanId}/{mealId}` |
-| Supplements | `POST /api/supplement/create`, `GET /api/supplement/list`, `GET /api/supplement/list/{id}`, `PATCH /api/supplement/edit/{id}`, `DELETE /api/supplement/delete/{id}` |
-
-## Project structure
-
-```text
-src/main/java/com/ahmed/Hadidy/
-├── config/          # Security and user-details configuration
-├── controllers/     # REST endpoints
-├── dto/             # Request and response models
-├── entity/          # JPA entities
-├── exceptions/      # Domain exceptions and global error handling
-├── repository/      # Spring Data repositories
-└── service/         # User and fitness-domain services
-Front/               # Static dashboard and onboarding pages
-src/test/            # Application, controller, and service tests
-```
