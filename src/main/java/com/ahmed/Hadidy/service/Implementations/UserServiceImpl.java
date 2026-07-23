@@ -2,6 +2,7 @@ package com.ahmed.Hadidy.service.Implementations;
 
 import com.ahmed.Hadidy.dto.request.EditPasswordRequest;
 import com.ahmed.Hadidy.dto.request.UserRequest;
+import com.ahmed.Hadidy.entity.Profile;
 import com.ahmed.Hadidy.entity.User;
 import com.ahmed.Hadidy.exceptions.IncorrectPasswordException;
 import com.ahmed.Hadidy.exceptions.UserNotFoundException;
@@ -28,13 +29,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(UserRequest userRequest) {
-
         User u = userRepository.findByUsername(userRequest.getUsername())
-                .orElse(
-                        null);
+                .orElse(null);
         if (u != null) throw new UsernameAlreadyExistsException(userRequest.getUsername());
         String hashedPassword = passwordEncoder.encode(userRequest.getPassword());
-        return userRepository.save(new User(userRequest.getUsername(), hashedPassword));
+
+        User user = new User(userRequest.getUsername(), hashedPassword);
+        Profile p = new Profile();
+        p.setUser(user);
+        user.setProfile(p);
+
+        return userRepository.save(user);
 
     }
 

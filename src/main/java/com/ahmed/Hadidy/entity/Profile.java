@@ -1,6 +1,5 @@
 package com.ahmed.Hadidy.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +40,7 @@ public class Profile {
     private String goal ;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id" , nullable = false , unique = true)
     private User user ;
 
     @Column(name="start_subscribe")

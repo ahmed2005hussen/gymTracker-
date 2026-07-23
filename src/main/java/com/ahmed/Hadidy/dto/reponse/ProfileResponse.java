@@ -1,7 +1,6 @@
-package com.ahmed.Hadidy.dto;
+package com.ahmed.Hadidy.dto.reponse;
 
 import com.ahmed.Hadidy.entity.Profile;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,8 +10,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class ProfileDto {
+public class ProfileResponse {
+
+        private Long id;
 
         private String fullName;
 
@@ -32,9 +32,10 @@ public class ProfileDto {
 
         private String gmail;
 
-        private double bmi ;
+        private Double bmi ;
 
-        public ProfileDto(Profile p) {
+        public ProfileResponse(Profile p) {
+                this.id = p.getId();
                 this.fullName = p.getFullName();
                 this.weight = p.getWeight();
                 this.height = p.getHeight();
@@ -46,4 +47,5 @@ public class ProfileDto {
                 this.gmail = p.getGmail();
                 this.bmi = p.getBmi();
         }
+
 }

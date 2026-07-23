@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface UserService {
      Optional<User> findByUsername(String username);
      User registerUser(UserRequest userRequest);
-
      void changePassword(EditPasswordRequest editPasswordRequest  , String username );
 }

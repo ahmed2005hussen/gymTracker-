@@ -50,4 +50,13 @@ public class GlobalExceptionHandler {
                 .body(Map.of("message", message));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException exception){
+
+        return ResponseEntity.badRequest().body(
+                Map.of("message" , exception.getMessage())
+        );
+
+    }
+
 }
