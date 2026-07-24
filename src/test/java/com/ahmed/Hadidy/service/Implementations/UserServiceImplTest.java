@@ -7,8 +7,10 @@ import com.ahmed.Hadidy.exceptions.IncorrectPasswordException;
 import com.ahmed.Hadidy.exceptions.UserNotFoundException;
 import com.ahmed.Hadidy.exceptions.UsernameAlreadyExistsException;
 import com.ahmed.Hadidy.repository.UserRepository;
+import com.ahmed.Hadidy.support.TestResultLogger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, TestResultLogger.class})
 class UserServiceImplTest {
 
     @Mock
@@ -47,7 +49,12 @@ class UserServiceImplTest {
 
         assertSame(savedUser, result);
         verify(passwordEncoder).encode("password123");
-        verify(userRepository).save(any(User.class));
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+
+        User userToSave = userCaptor.getValue();
+        assertNotNull(userToSave.getProfile());
+        assertSame(userToSave, userToSave.getProfile().getUser());
     }
 
     @Test

@@ -1,22 +1,19 @@
 package com.ahmed.Hadidy.service.interfaces;
 
 
-import com.ahmed.Hadidy.entity.Supplement;
+import com.ahmed.Hadidy.dto.reponse.SupplementResponse;
+import com.ahmed.Hadidy.dto.request.CreateSupplementRequest;
+import com.ahmed.Hadidy.dto.request.SupplementRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SupplementService {
-    Supplement save(Supplement supplement);
 
-    List<Supplement> findAll();
+    SupplementResponse createSupplement(CreateSupplementRequest request , String username);
+    List<SupplementResponse> listSupplement(String username);
+    SupplementResponse getSupplement(Long id , String username);
 
-    Optional<Supplement> findById(Long id);
+    void deleteSupplement(Long id , String username);
 
-    void deleteById(Long id );
-
-    Supplement update(Long id, Supplement supplement);
-
-    List<Supplement> findByUserId(Long userId);
-
+    SupplementResponse editSupplement(Long id , SupplementRequest request , String username);
 }

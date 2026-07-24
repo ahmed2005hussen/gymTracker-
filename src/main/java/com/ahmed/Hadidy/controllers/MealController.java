@@ -1,14 +1,11 @@
 package com.ahmed.Hadidy.controllers;
 
 import com.ahmed.Hadidy.dto.MealResponse;
-import com.ahmed.Hadidy.dto.SupplementResponse;
 import com.ahmed.Hadidy.entity.DietPlan;
 import com.ahmed.Hadidy.entity.Meal;
-import com.ahmed.Hadidy.entity.Supplement;
 import com.ahmed.Hadidy.entity.User;
 import com.ahmed.Hadidy.repository.DietPlanRepository;
 import com.ahmed.Hadidy.repository.MealRepository;
-import com.ahmed.Hadidy.repository.SupplementRepository;
 import com.ahmed.Hadidy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -59,4 +59,14 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(DataNotExist.class)
+    public ResponseEntity<Map<String , String>> handleDataNotExist(
+            DataNotExist exception
+    ){
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of("message" , exception.getMessage())
+        );
+    }
+
 }

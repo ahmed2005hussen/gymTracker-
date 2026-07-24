@@ -10,6 +10,7 @@ import com.ahmed.Hadidy.service.interfaces.ProfileService;
 import com.ahmed.Hadidy.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class ProfileServiceImplementation implements ProfileService {
     }
 
     @Override
+    @Transactional
     public ProfileResponse editProfile(ProfileRequest request, String username) {
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(username));

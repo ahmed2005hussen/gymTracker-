@@ -16,6 +16,10 @@ public class Supplement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "profile_id", nullable = false)
+    private Profile profile ;
+
     @Column(name ="name")
     private String name;
 
@@ -28,8 +32,5 @@ public class Supplement {
     @Column(name = "picture")
     private String picture ;
 
-    @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private Profile profile ;
 
 }
