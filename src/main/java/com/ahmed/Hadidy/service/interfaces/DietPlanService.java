@@ -1,21 +1,15 @@
 package com.ahmed.Hadidy.service.interfaces;
 
-import com.ahmed.Hadidy.entity.DietPlan;
+import com.ahmed.Hadidy.dto.response.DietPlanResponse;
+import com.ahmed.Hadidy.dto.request.CreateDietPlanRequest;
+import com.ahmed.Hadidy.dto.request.DietPlanRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface DietPlanService  {
-
-    DietPlan save(DietPlan dietPlan);
-
-    List<DietPlan> findAll();
-
-    Optional<DietPlan> findById(Long id);
-
-    void deleteById(Long id );
-
-    DietPlan update(Long id, DietPlan dietPlan);
-
-    List<DietPlan> findByUserId(Long userId);
+    DietPlanResponse createDietPlan(String username , CreateDietPlanRequest request);
+    List<DietPlanResponse> listDietPlan(String username);
+    DietPlanResponse getDietPlan(String username , Long id);
+    DietPlanResponse editDietPlan(String username ,Long id ,  DietPlanRequest request);
+    void deleteDietPlan(String username , Long id);
 }

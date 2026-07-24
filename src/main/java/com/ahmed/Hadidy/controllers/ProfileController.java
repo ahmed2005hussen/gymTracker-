@@ -1,6 +1,6 @@
 package com.ahmed.Hadidy.controllers;
 
-import com.ahmed.Hadidy.dto.reponse.ProfileResponse;
+import com.ahmed.Hadidy.dto.response.ProfileResponse;
 import com.ahmed.Hadidy.dto.request.ProfileRequest;
 import com.ahmed.Hadidy.service.interfaces.ProfileService;
 import jakarta.validation.Valid;

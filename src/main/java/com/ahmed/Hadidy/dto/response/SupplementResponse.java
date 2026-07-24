@@ -1,4 +1,4 @@
-package com.ahmed.Hadidy.dto.reponse;
+package com.ahmed.Hadidy.dto.response;
 
 
 import com.ahmed.Hadidy.entity.Supplement;

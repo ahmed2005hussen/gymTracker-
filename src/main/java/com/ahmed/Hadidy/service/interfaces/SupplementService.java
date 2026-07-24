@@ -1,7 +1,7 @@
 package com.ahmed.Hadidy.service.interfaces;
 
 
-import com.ahmed.Hadidy.dto.reponse.SupplementResponse;
+import com.ahmed.Hadidy.dto.response.SupplementResponse;
 import com.ahmed.Hadidy.dto.request.CreateSupplementRequest;
 import com.ahmed.Hadidy.dto.request.SupplementRequest;
 

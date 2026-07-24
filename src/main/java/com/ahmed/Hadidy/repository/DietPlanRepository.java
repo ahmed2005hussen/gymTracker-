@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DietPlanRepository extends JpaRepository<DietPlan,Long> {
-    List<DietPlan> findByProfileId(Long userId);
+    List<DietPlan> findAllByProfileId(Long profileId);
+    Optional<DietPlan> findByIdAndProfileId(Long id , Long profileId);
 }

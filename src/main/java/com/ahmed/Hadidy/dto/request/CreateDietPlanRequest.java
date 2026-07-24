@@ -1,6 +1,6 @@
-package com.ahmed.Hadidy.dto;
+package com.ahmed.Hadidy.dto.request;
 
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class DietPlanResponse {
+public class CreateDietPlanRequest {
 
+    @NotBlank
     private String title;
 
     private String description ;
