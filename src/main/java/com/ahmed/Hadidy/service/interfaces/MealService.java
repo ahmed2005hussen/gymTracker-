@@ -1,22 +1,17 @@
 package com.ahmed.Hadidy.service.interfaces;
 
 
-import com.ahmed.Hadidy.entity.Meal;
+import com.ahmed.Hadidy.dto.request.CreateMealRequest;
+import com.ahmed.Hadidy.dto.request.MealRequest;
+import com.ahmed.Hadidy.dto.response.MealResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MealService {
 
-    Meal save(Meal meal);
-
-    List<Meal> findAll();
-
-    Optional<Meal> findById(Long id);
-
-    void deleteById(Long id );
-
-    Meal update(Long id, Meal meal);
-
-
+    MealResponse createMeal(String username , Long dietPlanId , CreateMealRequest request);
+    List<MealResponse> listMeal(String username , Long dietPlanId ) ;
+    MealResponse getMeal(String username , Long dietPlanId , Long mealId);
+    void deleteMeal(String username , Long dietPlanId , Long mealId);
+    MealResponse editMeal(String username,Long dietPlanId,Long mealId, MealRequest request);
 }

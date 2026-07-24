@@ -1,6 +1,7 @@
-package com.ahmed.Hadidy.dto;
+package com.ahmed.Hadidy.dto.request;
 
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,24 +9,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class MealResponse {
+public class CreateMealRequest {
 
+    @NotBlank
     private String name;
 
     private String recipe;
 
     private String photo;
 
+    @PositiveOrZero
     private Double calories;
 
+    @PositiveOrZero
     private Double protein;
 
+    @PositiveOrZero
     private Double carbs;
 
+    @PositiveOrZero
     private Double fats;
 
     private String time;
 
-    private Long DietPlanId;
 }
