@@ -60,10 +60,7 @@ public class SupplementController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 "Supplement is Deleted"
         );
-
     }
-
-
     @PatchMapping("/{id}")
     public ResponseEntity<SupplementResponse> editSupplement
             (@PathVariable Long id, @Valid @RequestBody SupplementRequest request,

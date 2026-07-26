@@ -28,7 +28,6 @@ import java.util.Set;
 public class ExerciseController {
 
 
-    // CRUD
     final private UserRepository userRepository;
     final private WorkoutPlanRepository workoutPlanRepository;
     final private WorkoutDayRepository workoutDayRepository;

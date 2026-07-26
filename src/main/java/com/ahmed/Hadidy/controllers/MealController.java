@@ -25,7 +25,6 @@ public class MealController {
             @Valid @RequestBody CreateMealRequest request
             , Authentication authentication,
             @PathVariable Long dietPlanId) {
-
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(mealService.createMeal(authentication.getName(), dietPlanId, request));
 
@@ -75,7 +74,7 @@ public class MealController {
    public ResponseEntity<MealResponse> editMeal
             (@PathVariable Long dietPlanId,
              @PathVariable Long mealId,
-             @RequestBody MealRequest request,
+             @Valid @RequestBody MealRequest request,
              Authentication authentication
             ) {
         return ResponseEntity.status(HttpStatus.OK).body(

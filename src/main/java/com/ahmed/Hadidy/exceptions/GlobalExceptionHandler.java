@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
             UserNotFoundException exception) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("message", "User was not found."));
+                .body(Map.of("message", exception.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
