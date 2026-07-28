@@ -1,22 +1,22 @@
 package com.ahmed.Hadidy.service.interfaces;
 
-import com.ahmed.Hadidy.entity.WorkoutPlan;
+import com.ahmed.Hadidy.dto.request.CreateWorkoutPlanRequest;
+import com.ahmed.Hadidy.dto.request.WorkoutPlanRequest;
+import com.ahmed.Hadidy.dto.response.WorkoutPlanResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface WorkoutPlanService {
 
-    WorkoutPlan save(WorkoutPlan workoutPlan);
+    WorkoutPlanResponse createWorkoutPlan(String username, CreateWorkoutPlanRequest request);
 
-    List<WorkoutPlan> findAll();
+    List<WorkoutPlanResponse> listWorkoutPlan(String username);
 
-    Optional<WorkoutPlan> findById(Long id);
+    WorkoutPlanResponse getWorkoutPlan(String username, Long id);
 
-    void deleteById(Long id );
+    void deleteWorkoutPlan(String username, Long id);
 
-    WorkoutPlan update(Long id, WorkoutPlan workoutPlan);
+    WorkoutPlanResponse editWorkoutPlan(String username, Long id, WorkoutPlanRequest request);
 
-    List<WorkoutPlan> findByUserId(Long userId);
 
 }

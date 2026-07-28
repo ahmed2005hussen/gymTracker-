@@ -1,27 +1,22 @@
-package com.ahmed.Hadidy.dto;
+package com.ahmed.Hadidy.dto.request;
 
-import com.ahmed.Hadidy.entity.WorkoutDay;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkoutPlanResponse {
+public class CreateWorkoutPlanRequest {
 
-
+    @NotBlank
     private String name ;
 
     private String description ;
 
     private String picture ;
-
-    private List<WorkoutDayResponse> workoutDays;
-
 
 }
