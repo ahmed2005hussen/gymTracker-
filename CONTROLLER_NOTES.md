@@ -16,17 +16,21 @@ Use this file to keep project notes grouped by controller. Add new notes directl
 ---
 
 ## DietPlanController
+
 Done With all of the best practice approach
 
 ## ExerciseController
 
 ## MealController
+
 Done With all of the best practice approach
 
 ## ProfileController
+
 Done With all of the best practice approach
 
 ## SupplementController
+
 Done With all of the best practice approach
 
 ## UserController
@@ -34,7 +38,9 @@ Done With all of the best practice approach
 Done With all of the best practice approach
 
 ## WorkoutDayController
-
+Done With all of the best practice approach
 
 ## WorkoutPlanController
+
+Done With all of the best practice approach
 

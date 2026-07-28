@@ -1,58 +1,140 @@
 package com.ahmed.Hadidy.service.Implementations;
 
 
+import com.ahmed.Hadidy.dto.request.CreateWorkoutDayRequest;
+import com.ahmed.Hadidy.dto.request.WorkoutDayRequest;
+import com.ahmed.Hadidy.dto.response.WorkoutDayResponse;
+import com.ahmed.Hadidy.entity.User;
 import com.ahmed.Hadidy.entity.WorkoutDay;
+import com.ahmed.Hadidy.entity.WorkoutPlan;
+import com.ahmed.Hadidy.exceptions.DataNotExist;
+import com.ahmed.Hadidy.exceptions.UserNotFoundException;
+import com.ahmed.Hadidy.repository.UserRepository;
 import com.ahmed.Hadidy.repository.WorkoutDayRepository;
+import com.ahmed.Hadidy.repository.WorkoutPlanRepository;
 import com.ahmed.Hadidy.service.interfaces.WorkoutDayService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class WorkoutDayServiceImpl implements WorkoutDayService {
 
     private final WorkoutDayRepository workoutDayRepository;
+    private final UserRepository userRepository;
+    private final WorkoutPlanRepository workoutPlanRepository;
 
-    public WorkoutDayServiceImpl(WorkoutDayRepository workoutDayRepository) {
-        this.workoutDayRepository = workoutDayRepository;
+    private User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new UserNotFoundException(username)
+        );
     }
 
     @Override
-    public WorkoutDay save(WorkoutDay workoutDay) {
-        return workoutDayRepository.save(workoutDay);
+    public WorkoutDayResponse createWorkoutDay(String username, Long workoutPlanId,
+                                               CreateWorkoutDayRequest request) {
+
+        User user = findByUsername(username);
+
+        WorkoutPlan workoutPlan = workoutPlanRepository.
+                findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
+                .orElseThrow(() -> new DataNotExist("Workout Plan not found"));
+
+
+        WorkoutDay workoutDay = new WorkoutDay();
+
+        workoutDay.setWorkoutPlan(workoutPlan);
+
+        workoutDay.setName(request.getName());
+        workoutDay.setDescription(request.getDescription());
+        workoutDay.setExpectedTime(request.getExpectedTime());
+        workoutDay.setImage(request.getImage());
+        workoutDay.setTotalExercises(request.getTotalExercises());
+        workoutDay.setTotalRepeat(request.getTotalRepeat());
+
+        return new WorkoutDayResponse(workoutDayRepository.save(workoutDay));
+
     }
 
     @Override
-    public List<WorkoutDay> findAll() {
-        return workoutDayRepository.findAll();
+    public List<WorkoutDayResponse> listWorkoutDay(String username, Long workoutPlanId) {
+
+        User user = findByUsername(username);
+
+        WorkoutPlan workoutPlan = workoutPlanRepository.
+                findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
+                .orElseThrow(() -> new DataNotExist("Workout Plan not found"));
+
+        return workoutDayRepository.findAllByWorkoutPlanId(workoutPlan.getId())
+                .stream().map(WorkoutDayResponse::new).toList();
+
     }
 
     @Override
-    public Optional<WorkoutDay> findById(Long id) {
-        return Optional.of(workoutDayRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found")));
+    public WorkoutDayResponse getWorkoutDay(String username, Long workoutPlanId, Long workoutDayId) {
+
+        User user = findByUsername(username);
+
+        WorkoutPlan workoutPlan = workoutPlanRepository.
+                findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
+                .orElseThrow(() -> new DataNotExist("Workout Plan not found"));
+
+        WorkoutDay workoutDay = workoutDayRepository.findByIdAndWorkoutPlanId(workoutDayId, workoutPlan.getId())
+                .orElseThrow(() -> new DataNotExist("This workout day not exist"));
+
+        return new WorkoutDayResponse(workoutDay);
+
     }
 
     @Override
-    public void deleteById(Long id) {
-        workoutDayRepository.deleteById(id);
+    public void deleteWorkoutDay(String username, Long workoutPlanId, Long workoutDayId) {
+        User user = findByUsername(username);
+
+        WorkoutPlan workoutPlan = workoutPlanRepository.
+                findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
+                .orElseThrow(() -> new DataNotExist("Workout Plan not found"));
+
+        WorkoutDay workoutDay = workoutDayRepository.findByIdAndWorkoutPlanId(workoutDayId, workoutPlan.getId())
+                .orElseThrow(() -> new DataNotExist("This workout day not exist"));
+
+        workoutDayRepository.deleteById(workoutDay.getId()) ;
+
     }
 
     @Override
-    public WorkoutDay update(Long id, WorkoutDay workoutDay) {
-        WorkoutDay w = workoutDayRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+    public WorkoutDayResponse editWorkoutDay(String username, Long workoutPlanId, Long workoutDayId, WorkoutDayRequest request) {
 
-        w.setName(workoutDay.getName());
-        w.setDescription(workoutDay.getDescription());
-        w.setExpectedTime(workoutDay.getExpectedTime());
-        w.setImage(workoutDay.getImage());
+        User user = findByUsername(username);
 
-        return workoutDayRepository.save(w);
-    }
+        WorkoutPlan workoutPlan = workoutPlanRepository.
+                findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
+                .orElseThrow(() -> new DataNotExist("Workout Plan not found"));
 
-    @Override
-    public List<WorkoutDay> findByWorkoutPlanId(Long workoutPlanId) {
-        return workoutDayRepository.findByWorkoutPlanId(workoutPlanId);
+        WorkoutDay w = workoutDayRepository.findByIdAndWorkoutPlanId(workoutDayId, workoutPlan.getId())
+                .orElseThrow(() -> new DataNotExist("This workout day not exist"));
+
+
+        if (request.getImage() != null) {
+            w.setImage(request.getImage());
+        }
+        if (request.getName() != null) {
+            w.setName(request.getName());
+        }
+        if (request.getDescription() != null) {
+            w.setDescription(request.getDescription());
+        }
+        if (request.getExpectedTime() != null) {
+            w.setExpectedTime(request.getExpectedTime());
+        }
+        if (request.getTotalRepeat() != null) {
+            w.setTotalRepeat(request.getTotalRepeat());
+        }
+        if (request.getTotalExercises() != null) {
+            w.setTotalExercises(request.getTotalExercises());
+        }
+        return new WorkoutDayResponse(workoutDayRepository.save(w));
+
     }
 }

@@ -42,7 +42,6 @@ public class WorkoutDay {
     @JoinColumn(name = "workout_plan_id")
     private WorkoutPlan workoutPlan;
 
-
     @OneToMany(mappedBy = "workoutDay")
     private Set<Exercise> exercises = new HashSet<>();
 
