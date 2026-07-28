@@ -1,5 +1,67 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Profile — Hadidy</title><link rel="stylesheet" href="style.css"><style>.profile-top{display:flex;align-items:center;gap:16px;margin-bottom:24px}.profile-top h1{font-size:24px}.profile-top p{color:var(--muted);font-size:13px;margin-top:4px}.profile-avatar{width:68px;height:68px;font-size:24px}.settings{max-width:620px}</style></head><body>
-<nav class="navbar"><a href="index.html" class="nav-logo"><div class="logo-icon">H</div><span class="logo-text">Ha<span>didy</span></span></a><ul class="nav-links"><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Workouts.html">Workouts</a></li><li><a href="Diet.html">Diet</a></li><li><a href="Progress.html">Progress</a></li><li><a href="Community.html">Community</a></li></ul><div class="nav-right"><a href="Profile.html" class="nav-avatar active" id="avatar">A</a></div></nav>
-<div class="app-layout"><aside class="sidebar"><div class="sidebar-section"><div class="sidebar-label">Main</div><a href="Dashboard.html" class="sidebar-link"><span class="icon">🏠</span>Dashboard</a><a href="Workouts.html" class="sidebar-link"><span class="icon">🏋️</span>Workouts</a><a href="Diet.html" class="sidebar-link"><span class="icon">🥗</span>Diet</a><a href="Progress.html" class="sidebar-link"><span class="icon">📈</span>Progress</a><a href="Supplements.html" class="sidebar-link"><span class="icon">💊</span>Supplements</a></div><div class="sidebar-section"><div class="sidebar-label">Social</div><a href="Community.html" class="sidebar-link"><span class="icon">👥</span>Community</a></div><div class="sidebar-section"><div class="sidebar-label">Account</div><a href="Profile.html" class="sidebar-link active"><span class="icon">👤</span>Profile</a><a href="Login.html" class="sidebar-link" onclick="localStorage.removeItem('hadidy_logged_in')"><span class="icon">🚪</span>Log out</a></div></aside><main class="main-content"><div class="profile-top"><div class="avatar profile-avatar" id="bigAvatar">A</div><div><h1 id="displayName">Your profile</h1><p>Manage the details that power your dashboard.</p></div></div><section class="card settings"><h2 style="font-size:17px;margin-bottom:18px">Personal details</h2><div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="form-group"><label>Username</label><input id="username" style="padding-left:12px"></div><div class="form-group"><label>Email</label><input id="email" type="email" style="padding-left:12px"></div><div class="form-group"><label>Weight (kg)</label><input id="weight" type="number" step=".1" style="padding-left:12px"></div><div class="form-group"><label>Height (cm)</label><input id="height" type="number" style="padding-left:12px"></div></div><div class="form-group"><label>Fitness goal</label><select id="goal"><option>Build muscle</option><option>Lose weight</option><option>Get fit</option></select></div><button class="btn btn-primary" onclick="save()">Save changes</button><span id="saved" style="margin-left:10px;color:var(--success);font-size:13px" hidden>Saved!</span></section></main></div>
-<script>let u=JSON.parse(localStorage.getItem('hadidy_user')||'{}');function populate(){username.value=u.username||'';email.value=u.email||'';weight.value=u.weight||'';height.value=u.height||'';goal.value=u.goal||'Build muscle';const letter=(u.username||'A')[0].toUpperCase();avatar.textContent=bigAvatar.textContent=letter;displayName.textContent=u.username||'Your profile'}function save(){u={...u,username:username.value.trim(),email:email.value.trim(),weight:weight.value,height:height.value,goal:goal.value};localStorage.setItem('hadidy_user',JSON.stringify(u));saved.hidden=false;populate();setTimeout(()=>saved.hidden=true,2000)}populate()</script></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile — Hadidy</title><link rel="stylesheet" href="style.css">
+  <style>.profile-top{display:flex;align-items:center;gap:16px;margin-bottom:24px}.profile-top h1{font-size:24px}.profile-top p{color:var(--muted);font-size:13px;margin-top:4px}.profile-avatar{width:68px;height:68px;font-size:24px}.settings{max-width:620px}</style>
+</head>
+<body>
+<nav class="navbar"><a href="index.html" class="nav-logo"><div class="logo-icon">H</div><span class="logo-text">Ha<span>didy</span></span></a><ul class="nav-links"><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Workouts.html">Workouts</a></li><li><a href="Diet.html">Diet</a></li><li><a href="Supplements.html">Supplements</a></li></ul><div class="nav-right"><a href="Profile.html" class="nav-avatar active" id="avatar">A</a></div></nav>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Main</div><a href="Dashboard.html" class="sidebar-link"><span class="icon">⌂</span>Overview</a><a href="Workouts.html" class="sidebar-link"><span class="icon">◈</span>Workouts</a><a href="Diet.html" class="sidebar-link"><span class="icon">◉</span>Nutrition</a><a href="Supplements.html" class="sidebar-link"><span class="icon">✦</span>Supplements</a></div>
+    <div class="sidebar-section"><div class="sidebar-label">Connect</div><a href="Profile.html" class="sidebar-link active"><span class="icon">◎</span>Profile</a></div>
+    <div class="sidebar-section"><a href="Login.html" class="sidebar-link" onclick="logout()"><span class="icon">←</span>Log out</a></div>
+  </aside>
+  <main class="main-content">
+    <div class="profile-top"><div class="avatar profile-avatar" id="bigAvatar">A</div><div><h1 id="displayName">Your profile</h1><p>Manage the details that power your dashboard.</p></div></div>
+    <p id="profileError" style="color:var(--danger);font-size:13px;margin:-10px 0 16px" hidden></p>
+    <section class="card settings">
+      <h2 style="font-size:17px;margin-bottom:18px">Personal details</h2>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-group"><label>Username</label><input id="username" readonly style="padding-left:12px"></div>
+        <div class="form-group"><label>Email</label><input id="email" type="email" style="padding-left:12px"></div>
+        <div class="form-group"><label>Full name</label><input id="fullName" style="padding-left:12px"></div>
+        <div class="form-group"><label>Weight (kg)</label><input id="weight" type="number" step=".1" style="padding-left:12px"></div>
+        <div class="form-group"><label>Height (cm)</label><input id="height" type="number" step=".1" style="padding-left:12px"></div>
+      </div>
+      <div class="form-group"><label>Fitness goal</label><select id="goal"><option>Build muscle</option><option>Lose weight</option><option>Get fit</option></select></div>
+      <button class="btn btn-primary" onclick="save()">Save changes</button><span id="saved" style="margin-left:10px;color:var(--success);font-size:13px" hidden>Saved!</span>
+    </section>
+  </main>
+</div>
+<script src="api.js"></script>
+<script>
+let profile = {};
+const field = id => document.getElementById(id);
+function populate() {
+  field('username').value = currentUsername();
+  field('email').value = profile.gmail || '';
+  field('fullName').value = profile.fullName || '';
+  field('weight').value = profile.weight == null ? '' : profile.weight;
+  field('height').value = profile.height == null ? '' : profile.height;
+  field('goal').value = profile.goal || 'Build muscle';
+  const letter = (profile.fullName || currentUsername() || 'A')[0].toUpperCase();
+  field('avatar').textContent = field('bigAvatar').textContent = letter;
+  field('displayName').textContent = profile.fullName || currentUsername() || 'Your profile';
+}
+async function save() {
+  try {
+    profile = await api('/api/users/me/profile', { method: 'PATCH', body: JSON.stringify({
+      gmail: field('email').value.trim() || null,
+      fullName: field('fullName').value.trim() || null,
+      weight: field('weight').value === '' ? null : Number(field('weight').value),
+      height: field('height').value === '' ? null : Number(field('height').value),
+      goal: field('goal').value
+    }) });
+    field('profileError').hidden = true; field('saved').hidden = false; populate();
+    setTimeout(() => field('saved').hidden = true, 2000);
+  } catch (error) { field('profileError').textContent = error.message; field('profileError').hidden = false; }
+}
+async function load() {
+  try { requireAuth(); profile = await api('/api/users/me/profile'); populate(); }
+  catch (error) { field('profileError').textContent = error.message; field('profileError').hidden = false; }
+}
+load();
+</script>
+</body></html>

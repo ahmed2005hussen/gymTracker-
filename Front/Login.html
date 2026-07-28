@@ -6,24 +6,29 @@
 <title>Login — Hadidy</title>
 <link rel="stylesheet" href="style.css">
 <style>
-body { display: flex; align-items: center; justify-content: center; min-height: 100vh;
-  background: radial-gradient(ellipse at 50% 0%, rgba(200,169,110,0.06) 0%, transparent 60%); }
-.login-box { width: 420px; }
-.login-logo { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 2.5rem; text-decoration: none; }
-.login-box h1 { font-size: 24px; font-weight: 500; text-align: center; margin-bottom: 6px; }
-.login-box .sub { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 2rem; }
-.login-box .sub a { color: var(--accent); text-decoration: none; }
-input { padding-left: 12px !important; }
-.forgot { font-size: 12px; color: var(--accent); text-decoration: none; float: right; margin-top: -8px; }
+body { display:grid; grid-template-columns:minmax(280px, .9fr) minmax(400px, 1.1fr); align-items:stretch; min-height:100vh; background:#0d0f0d; }
+.login-intro { padding:clamp(2rem,6vw,5rem); display:flex; flex-direction:column; justify-content:center; background:radial-gradient(circle at 25% 30%,rgba(213,255,63,.16),transparent 31%),linear-gradient(145deg,#111510,#080908); border-right:1px solid rgba(213,255,63,.13); }
+.login-intro .login-logo { justify-content:flex-start; margin:0 0 auto; }
+.login-intro h2 { font-size:clamp(30px,4vw,48px); line-height:1.02; letter-spacing:-.06em; max-width:370px; margin-bottom:16px; }
+.login-intro h2 span { color:#d5ff3f; }.login-intro p { max-width:350px; color:#9ea49b; font-size:14px; line-height:1.75; }
+.login-intro .intro-mark { margin-top:42px; color:#d5ff3f; font-size:11px; font-weight:700; letter-spacing:.18em; }
+.login-box { width:min(420px, calc(100vw - 48px)); justify-self:center; align-self:center; }
+.login-box h1 { font-size:29px; letter-spacing:-.05em; font-weight:550; margin-bottom:7px; }.login-box .sub { font-size:14px; color:var(--muted); margin-bottom:2rem; }.login-box .sub a,.forgot { color:#d5ff3f; text-decoration:none; }.login-box .card { background:#151915; border-color:rgba(255,255,255,.1); box-shadow:0 25px 70px rgba(0,0,0,.32); padding:1.7rem; }
+input { padding-left:12px !important; background:#0d100d; }.forgot { font-size:12px; float:right; margin-top:-8px; }.login-box .btn-primary { background:#d5ff3f; color:#12160b; font-weight:700; }.login-box .btn-primary:hover { background:#e2ff74; }
+@media (max-width:760px){body{display:block}.login-intro{min-height:230px;padding:2rem}.login-intro .login-logo{margin-bottom:35px}.login-intro h2{font-size:31px}.login-intro .intro-mark{display:none}.login-box{margin:0 auto;padding:42px 0}}
 </style>
 </head>
 <body>
 
-<div class="login-box">
+<section class="login-intro">
   <a href="index.html" class="login-logo">
     <div class="logo-icon">H</div>
     <span class="logo-text">Ha<span>didy</span></span>
   </a>
+  <div><h2>Return to the<br><span>work you started.</span></h2><p>Plans, progress, and every rep are waiting for you in one focused space.</p><div class="intro-mark">HADIDY / BUILD DAILY</div></div>
+</section>
+
+<main class="login-box">
   <h1>Welcome back</h1>
   <p class="sub">Don't have an account? <a href="Register.html">Sign up free</a></p>
 
@@ -46,15 +51,23 @@ input { padding-left: 12px !important; }
   <div id="error" style="color:var(--danger); font-size:13px; text-align:center; margin-top:1rem; display:none;">
     Invalid username or password.
   </div>
-</div>
+</main>
 
+<script src="api.js"></script>
 <script>
-function handleLogin(e) {
+async function handleLogin(e) {
   e.preventDefault();
-  localStorage.setItem('hadidy_logged_in', 'true');
-  const user = { username: document.getElementById('username').value, goal: 'Build muscle', weight: 80, height: 175 };
-  if (!localStorage.getItem('hadidy_user')) localStorage.setItem('hadidy_user', JSON.stringify(user));
-  window.location.href = 'Dashboard.html';
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  setAuth(username, password);
+  try {
+    await api('/api/users/me/profile');
+    window.location.href = 'Dashboard.html';
+  } catch (err) {
+    clearAuth();
+    document.getElementById('error').textContent = 'Invalid username or password.';
+    document.getElementById('error').style.display = 'block';
+  }
 }
 </script>
 </body>

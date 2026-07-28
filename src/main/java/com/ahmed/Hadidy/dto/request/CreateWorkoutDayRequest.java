@@ -15,13 +15,13 @@ public class CreateWorkoutDayRequest {
     private String name;
 
     @PositiveOrZero
-    private Integer totalExercises;
+    private Integer totalExercises = 0;
 
     @PositiveOrZero
-    private Integer totalRepeat;
+    private Integer totalRepeat = 0;
 
     @PositiveOrZero
-    private Double expectedTime;
+    private Double expectedTime = 0.0;
 
     private String description;
 

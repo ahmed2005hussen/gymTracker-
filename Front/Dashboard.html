@@ -1,205 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard — Hadidy</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.welcome { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
-.welcome span { color: var(--accent); font-weight: 500; }
-.quick-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 2rem; }
-.activity-list { display: flex; flex-direction: column; gap: 10px; }
-.activity-item {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--card2); border: 0.5px solid var(--border);
-  border-radius: 10px; padding: 12px 14px;
-}
-.activity-icon { font-size: 20px; width: 36px; text-align: center; }
-.activity-info { flex: 1; }
-.activity-title { font-size: 14px; font-weight: 500; }
-.activity-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.activity-time { font-size: 11px; color: var(--muted); }
-.bmi-box {
-  background: var(--accent-dim); border: 0.5px solid var(--accent-border);
-  border-radius: 10px; padding: 1rem; margin-top: 12px;
-}
-.bmi-label { font-size: 12px; color: var(--accent); margin-bottom: 4px; }
-.bmi-value { font-size: 28px; font-weight: 500; }
-.bmi-status { font-size: 12px; color: var(--muted); margin-top: 4px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Hadidy</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dashboard-v2">
+  <nav class="navbar dashboard-nav">
+    <a href="index.html" class="nav-logo" aria-label="Hadidy home">
+      <div class="logo-icon">H</div>
+      <span class="logo-text">Ha<span>didy</span></span>
+    </a>
+    <div class="dashboard-nav-actions">
+      <span class="today-label" id="todayLabel"></span>
+      <a href="Profile.html" class="nav-avatar" id="navAvatar" aria-label="Open profile">A</a>
+    </div>
+  </nav>
 
-<nav class="navbar">
-  <a href="index.html" class="nav-logo">
-    <div class="logo-icon">H</div>
-    <span class="logo-text">Ha<span>didy</span></span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="Dashboard.html" class="active">Dashboard</a></li>
-    <li><a href="Workouts.html">Workouts</a></li>
-    <li><a href="Diet.html">Diet</a></li>
-    <li><a href="Progress.html">Progress</a></li>
-    <li><a href="Community.html">Community</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="Login.html" class="btn btn-ghost btn-sm">Log in</a>
-    <a href="Register.html" class="btn btn-primary btn-sm">Register</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Workspace</div>
+        <a href="Dashboard.html" class="sidebar-link active"><span class="icon">⌂</span> Overview</a>
+        <a href="Workouts.html" class="sidebar-link"><span class="icon">◈</span> Workouts</a>
+        <a href="Diet.html" class="sidebar-link"><span class="icon">◉</span> Nutrition</a>
+        <a href="Supplements.html" class="sidebar-link"><span class="icon">✦</span> Supplements</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Connect</div>
+        <a href="Profile.html" class="sidebar-link"><span class="icon">◎</span> Profile</a>
+      </div>
+      <div class="sidebar-bottom">
+        <a href="Login.html" class="sidebar-link" onclick="logout()"><span class="icon">←</span> Log out</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <section class="dashboard-hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Your training space</p>
+          <h1>Good to see you,<br><strong id="welcomeName"></strong>.</h1>
+          <p class="hero-description">Small sessions build serious momentum. Pick your next move and keep the streak alive.</p>
+          <div class="hero-actions">
+            <a href="Workouts.html" class="btn btn-neon">Start a workout <span>→</span></a>
+            <a href="Progress.html" class="btn btn-dark">View progress</a>
+          </div>
+        </div>
+        <div class="hero-visual" role="img" aria-label="Workout image area">
+          <div class="hero-visual-copy"><span>FOCUS</span><strong>ONE REP<br>AT A TIME.</strong></div>
+          <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+        </div>
+      </section>
+
+      <section class="metrics-grid" aria-label="Fitness summary">
+        <article class="metric-card lime-card">
+          <div class="metric-top"><span>Workout plans</span><span class="metric-icon">◈</span></div>
+          <strong id="statPlans">0</strong>
+          <p><span class="metric-dot"></span> Ready to train</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>Diet plans</span><span class="metric-icon">◉</span></div>
+          <strong id="statDiet">0</strong>
+          <p>Built for your goal</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>Supplements</span><span class="metric-icon">✦</span></div>
+          <strong id="statSupps">0</strong>
+          <p>In your stack</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>Progress logs</span><span class="metric-icon">↗</span></div>
+          <strong id="statProgress">0</strong>
+          <p>Moments captured</p>
+        </article>
+      </section>
+
+      <section class="dashboard-content-grid">
+        <article class="panel todays-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow"><span></span> Today</p><h2>Keep the engine running.</h2></div>
+            <span class="live-pill">● LIVE</span>
+          </div>
+          <div class="today-workout">
+            <div class="workout-image"><span>TRAIN<br>HARD</span></div>
+            <div class="today-workout-info">
+              <p class="label">Suggested next step</p>
+              <h3 id="nextWorkoutTitle">Create your first workout plan</h3>
+              <p id="nextWorkoutText">Build a plan, add days and exercises, then make every session count.</p>
+              <a href="Workouts.html" class="text-action">Open workouts <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel body-panel">
+          <div class="panel-heading compact"><div><p class="eyebrow"><span></span> Body metrics</p><h2>Your snapshot</h2></div><a href="Profile.html">Edit</a></div>
+          <div class="body-values">
+            <div><span>WEIGHT</span><strong id="statWeight">—</strong><small>kg</small></div>
+            <div><span>HEIGHT</span><strong id="statHeight">—</strong><small>cm</small></div>
+          </div>
+          <div class="bmi-meter" id="bmiBox">
+            <div class="bmi-meter-head"><span>BMI</span><strong id="bmiValue">—</strong></div>
+            <div class="meter-track"><i id="bmiNeedle"></i></div>
+            <p id="bmiStatus">Add weight and height in your profile.</p>
+          </div>
+          <div class="goal-note"><span>◎</span><p><small>CURRENT GOAL</small><strong id="statGoal">Set your fitness goal</strong></p></div>
+        </article>
+      </section>
+
+      <section class="collections-section">
+        <div class="section-header"><div><p class="eyebrow"><span></span> Your collection</p><h2>Built around your goals.</h2></div><a href="Workouts.html" class="text-action">Manage all <span>→</span></a></div>
+        <div class="collection-grid">
+          <a class="collection-card workout-collection" href="Workouts.html"><span class="collection-count" id="planCount">00</span><div><p>WORKOUTS</p><h3>Train with intent.</h3><span>Explore plans →</span></div></a>
+          <a class="collection-card diet-collection" href="Diet.html"><span class="collection-count" id="dietCount">00</span><div><p>NUTRITION</p><h3>Fuel the work.</h3><span>Explore plans →</span></div></a>
+          <a class="collection-card supplements-collection" href="Supplements.html"><span class="collection-count" id="suppCount">00</span><div><p>SUPPLEMENTS</p><h3>Know your stack.</h3><span>Explore stack →</span></div></a>
+        </div>
+      </section>
+    </main>
   </div>
-</nav>
 
-<div class="app-layout">
-  <aside class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Main</div>
-      <a href="Dashboard.html" class="sidebar-link active">
-        <span class="icon">🏠</span> Dashboard
-      </a>
-      <a href="Workouts.html" class="sidebar-link">
-        <span class="icon">🏋️</span> Workouts
-      </a>
-      <a href="Diet.html" class="sidebar-link">
-        <span class="icon">🥗</span> Diet
-      </a>
-      <a href="Progress.html" class="sidebar-link">
-        <span class="icon">📈</span> Progress
-      </a>
-      <a href="Supplements.html" class="sidebar-link">
-        <span class="icon">💊</span> Supplements
-      </a>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Social</div>
-      <a href="Community.html" class="sidebar-link">
-        <span class="icon">👥</span> Community
-      </a>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Account</div>
-      <a href="Profile.html" class="sidebar-link">
-        <span class="icon">👤</span> Profile
-      </a>
-      <a href="Login.html" class="sidebar-link" onclick="logout()">
-        <span class="icon">🚪</span> Log out
-      </a>
-    </div>
-  </aside>
-
-  <main class="main-content">
-    <div class="welcome">Good morning, <span id="welcomeName">Ahmed</span> 💪</div>
-
-    <div class="page-header-row" style="margin-bottom:1.5rem;">
-      <div>
-        <h1 style="font-size:22px; font-weight:500;">Dashboard</h1>
-        <p style="font-size:13px; color:var(--muted); margin-top:4px;">Here's your fitness overview</p>
-      </div>
-      <a href="Workouts.html" class="btn btn-primary btn-sm">+ New workout</a>
-    </div>
-
-    <div class="grid-4" style="margin-bottom:1.5rem;">
-      <div class="stat-card">
-        <div class="stat-icon">🏋️</div>
-        <div class="stat-label">Workout plans</div>
-        <div class="stat-value" id="statPlans">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">🥗</div>
-        <div class="stat-label">Diet plans</div>
-        <div class="stat-value" id="statDiet">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">💊</div>
-        <div class="stat-label">Supplements</div>
-        <div class="stat-value" id="statSupps">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">📸</div>
-        <div class="stat-label">Progress logs</div>
-        <div class="stat-value" id="statProgress">0</div>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h3 style="font-size:15px; font-weight:500; margin-bottom:1rem;">Recent activity</h3>
-        <div class="activity-list" id="activityList">
-          <div class="activity-item">
-            <div class="activity-icon">🏋️</div>
-            <div class="activity-info">
-              <div class="activity-title">No activity yet</div>
-              <div class="activity-sub">Start by creating a workout plan</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="card">
-          <h3 style="font-size:15px; font-weight:500; margin-bottom:1rem;">Your stats</h3>
-          <div style="display:flex; gap:12px;">
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--muted);">Weight</div>
-              <div style="font-size:22px; font-weight:500;" id="statWeight">—</div>
-              <div style="font-size:12px; color:var(--muted);">kg</div>
-            </div>
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--muted);">Height</div>
-              <div style="font-size:22px; font-weight:500;" id="statHeight">—</div>
-              <div style="font-size:12px; color:var(--muted);">cm</div>
-            </div>
-          </div>
-          <div class="bmi-box" id="bmiBox" style="display:none;">
-            <div class="bmi-label">BMI</div>
-            <div class="bmi-value" id="bmiValue">—</div>
-            <div class="bmi-status" id="bmiStatus"></div>
-          </div>
-          <div class="divider"></div>
-          <div style="font-size:13px; color:var(--muted);">Goal</div>
-          <div style="font-size:15px; font-weight:500; margin-top:4px;" id="statGoal">—</div>
-        </div>
-
-        <div class="card" style="margin-top:16px;">
-          <h3 style="font-size:15px; font-weight:500; margin-bottom:1rem;">Quick actions</h3>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <a href="Workouts.html" class="btn btn-ghost" style="justify-content:flex-start;">🏋️ Add workout plan</a>
-            <a href="Diet.html" class="btn btn-ghost" style="justify-content:flex-start;">🥗 Add diet plan</a>
-            <a href="Progress.html" class="btn btn-ghost" style="justify-content:flex-start;">📸 Log progress</a>
-            <a href="Supplements.html" class="btn btn-ghost" style="justify-content:flex-start;">💊 Add supplement</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
-
-<script>
-const user = JSON.parse(localStorage.getItem('hadidy_user') || '{}');
-if (user.username) {
-  document.getElementById('welcomeName').textContent = user.username;
-  document.getElementById('navAvatar').textContent = user.username[0].toUpperCase();
-}
-if (user.weight) document.getElementById('statWeight').textContent = user.weight;
-if (user.height) document.getElementById('statHeight').textContent = user.height;
-if (user.goal) document.getElementById('statGoal').textContent = user.goal;
-if (user.weight && user.height) {
-  const h = user.height / 100;
-  const bmi = (user.weight / (h * h)).toFixed(1);
-  document.getElementById('bmiValue').textContent = bmi;
-  let status = bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal weight ✓' : bmi < 30 ? 'Overweight' : 'Obese';
-  document.getElementById('bmiStatus').textContent = status;
-  document.getElementById('bmiBox').style.display = 'block';
-}
-const plans = JSON.parse(localStorage.getItem('hadidy_workout_plans') || '[]');
-const diets = JSON.parse(localStorage.getItem('hadidy_diet_plans') || '[]');
-const supps = JSON.parse(localStorage.getItem('hadidy_supplements') || '[]');
-const prog = JSON.parse(localStorage.getItem('hadidy_progress') || '[]');
-document.getElementById('statPlans').textContent = plans.length;
-document.getElementById('statDiet').textContent = diets.length;
-document.getElementById('statSupps').textContent = supps.length;
-document.getElementById('statProgress').textContent = prog.length;
-
-function logout() { localStorage.removeItem('hadidy_logged_in'); }
-</script>
+  <script src="api.js"></script>
+  <script>
+    async function loadDashboard() {
+      requireAuth();
+      try {
+        const [profile, plans, diets, supplements] = await Promise.all([
+          api('/api/users/me/profile'), api('/api/workout-plan'), api('/api/diet-plans'), api('/api/supplements')
+        ]);
+        const name = profile.fullName || currentUsername() || 'Athlete';
+        document.getElementById('welcomeName').textContent = name;
+        document.getElementById('navAvatar').textContent = name[0].toUpperCase();
+        document.getElementById('todayLabel').textContent = new Intl.DateTimeFormat('en', { weekday: 'short', month: 'short', day: 'numeric' }).format(new Date());
+        document.getElementById('statPlans').textContent = plans.length;
+        document.getElementById('statDiet').textContent = diets.length;
+        document.getElementById('statSupps').textContent = supplements.length;
+        document.getElementById('statProgress').textContent = '—';
+        document.getElementById('planCount').textContent = String(plans.length).padStart(2, '0');
+        document.getElementById('dietCount').textContent = String(diets.length).padStart(2, '0');
+        document.getElementById('suppCount').textContent = String(supplements.length).padStart(2, '0');
+        if (plans.length) {
+          document.getElementById('nextWorkoutTitle').textContent = plans[0].name;
+          document.getElementById('nextWorkoutText').textContent = plans[0].description || 'Your next plan is ready whenever you are.';
+        }
+        if (profile.weight != null) document.getElementById('statWeight').textContent = profile.weight;
+        if (profile.height != null) document.getElementById('statHeight').textContent = profile.height;
+        if (profile.goal) document.getElementById('statGoal').textContent = profile.goal;
+        if (profile.bmi != null) {
+          const bmi = profile.bmi;
+          const status = bmi < 18.5 ? 'Below the healthy range' : bmi < 25 ? 'Healthy range' : bmi < 30 ? 'Above the healthy range' : 'High range';
+          document.getElementById('bmiValue').textContent = bmi.toFixed(1);
+          document.getElementById('bmiStatus').textContent = status;
+          document.getElementById('bmiNeedle').style.left = `${Math.max(4, Math.min(96, ((bmi - 15) / 25) * 100))}%`;
+        }
+      } catch (error) { showApiError(error); }
+    }
+    loadDashboard();
+  </script>
 </body>
 </html>

@@ -43,6 +43,10 @@ body { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
 .terms { font-size: 11px; color: var(--muted); text-align: center; margin-top: 8px; }
 .terms a { color: var(--accent); text-decoration: none; }
 input { padding-left: 12px !important; }
+.password-wrap { position:relative; }.password-wrap input { padding-right:74px !important; }
+.password-toggle { position:absolute; right:8px; top:50%; transform:translateY(-50%); border:0; border-radius:6px; background:transparent; color:var(--accent); cursor:pointer; font:inherit; font-size:11px; font-weight:600; padding:6px 8px; }
+.password-toggle:hover { background:var(--accent-dim); }
+.register-error { color:var(--danger); font-size:12px; line-height:1.45; margin-top:12px; text-align:center; }
 </style>
 </head>
 <body>
@@ -93,7 +97,11 @@ input { padding-left: 12px !important; }
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" id="password" placeholder="8+ characters" required />
+      <div class="password-wrap"><input type="password" id="password" placeholder="8+ characters" minlength="8" required /><button class="password-toggle" type="button" onclick="togglePassword('password', this)">Show</button></div>
+    </div>
+    <div class="form-group">
+      <label>Rewrite password</label>
+      <div class="password-wrap"><input type="password" id="confirmPassword" placeholder="Rewrite your password" minlength="8" required /><button class="password-toggle" type="button" onclick="togglePassword('confirmPassword', this)">Show</button></div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -123,9 +131,11 @@ input { padding-left: 12px !important; }
     <br>
     <button type="submit" class="btn btn-primary btn-block btn-lg">Create account</button>
     <p class="terms">By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy policy</a></p>
+    <p class="register-error" id="registerError" hidden></p>
   </form>
 </div>
 
+<script src="api.js"></script>
 <script>
 function selectGoal(el, val) {
   document.querySelectorAll('.goal-opt').forEach(o => o.classList.remove('sel'));
@@ -133,18 +143,42 @@ function selectGoal(el, val) {
   document.getElementById('goal').value = val;
 }
 
-function handleRegister(e) {
+function togglePassword(inputId, button) {
+  const input = document.getElementById(inputId);
+  const isPassword = input.type === 'password';
+  input.type = isPassword ? 'text' : 'password';
+  button.textContent = isPassword ? 'Hide' : 'Show';
+}
+
+async function handleRegister(e) {
   e.preventDefault();
-  const user = {
-    username: document.getElementById('username').value,
-    email: document.getElementById('email').value,
-    goal: document.getElementById('goal').value,
-    weight: document.getElementById('weight').value,
-    height: document.getElementById('height').value,
-  };
-  localStorage.setItem('hadidy_user', JSON.stringify(user));
-  localStorage.setItem('hadidy_logged_in', 'true');
-  window.location.href = 'Dashboard.html';
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const confirmation = document.getElementById('confirmPassword').value;
+  const error = document.getElementById('registerError');
+  error.hidden = true;
+  if (password !== confirmation) {
+    error.textContent = 'Passwords do not match.';
+    error.hidden = false;
+    return;
+  }
+  try {
+    await api('/api/users/register', { method: 'POST', body: JSON.stringify({ username, password }) });
+    setAuth(username, password);
+    await api('/api/users/me/profile', { method: 'PATCH', body: JSON.stringify({
+      gmail: document.getElementById('email').value.trim(),
+      weight: Number(document.getElementById('weight').value) || null,
+      height: Number(document.getElementById('height').value) || null,
+      goal: document.getElementById('goal').value
+    }) });
+    window.location.href = 'Dashboard.html';
+  } catch (err) {
+    clearAuth();
+    error.textContent = err.message === 'Failed to fetch'
+      ? 'Cannot reach the backend. Start Spring Boot on http://localhost:8080.'
+      : (err.message || 'Could not create your account.');
+    error.hidden = false;
+  }
 }
 </script>
 </body>
