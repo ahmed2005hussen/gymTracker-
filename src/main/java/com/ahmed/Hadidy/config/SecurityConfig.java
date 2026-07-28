@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- مضاف، ضروري للـ preflight
-                        .requestMatchers("/api/user/register", "/error").permitAll()
+                        .requestMatchers("/api/users/register", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());
