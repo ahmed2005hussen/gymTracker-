@@ -1,7 +1,7 @@
-package com.ahmed.Hadidy.dto;
+package com.ahmed.Hadidy.dto.request;
 
 
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,19 +9,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class ExerciseResponse {
+public class ExerciseRequest {
 
     private String name;
 
     private String description ;
 
+    @PositiveOrZero
     private Integer repeat ;
 
+    @PositiveOrZero
     private Integer sets ;
 
     private String picture;
-
-    private Long workoutDayId;
 
 }

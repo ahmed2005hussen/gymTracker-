@@ -106,7 +106,8 @@ public class MealServiceImpl implements MealService {
 
     @Override
     @Transactional
-    public MealResponse editMeal(String username, Long dietPlanId, Long mealId, MealRequest request) {
+    public MealResponse editMeal(String username, Long dietPlanId,
+                                 Long mealId, MealRequest request) {
         User user = findByUsername(username);
 
         DietPlan dietPlan = dietPlanRepository.

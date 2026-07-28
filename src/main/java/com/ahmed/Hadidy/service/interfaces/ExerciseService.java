@@ -1,21 +1,32 @@
 package com.ahmed.Hadidy.service.interfaces;
 
 
-import com.ahmed.Hadidy.entity.Exercise;
+import com.ahmed.Hadidy.dto.request.CreateExerciseRequest;
+import com.ahmed.Hadidy.dto.request.ExerciseRequest;
+import com.ahmed.Hadidy.dto.response.ExerciseResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ExerciseService {
 
-    Exercise save(Exercise exercise);
 
-    List<Exercise> findAll();
+    ExerciseResponse createExercise(String username , Long workoutPlanId ,
+                                    Long workoutDayId , CreateExerciseRequest request);
 
-    Optional<Exercise> findById(Long id);
+    List<ExerciseResponse> listExercise(String username , Long workoutPlanId ,
+                                        Long workoutDayId);
 
-    void deleteById(Long id );
+    ExerciseResponse getExercise(String username , Long workoutPlanId ,
+                                 Long workoutDayId , Long exerciseID);
 
-    Exercise update(Long id, Exercise exercise);
+
+    void deleteExercise(String username , Long workoutPlanId ,
+                        Long workoutDayId  , Long exerciseID);
+
+
+    ExerciseResponse editExercise(String username , Long workoutPlanId ,
+                                  Long workoutDayId, Long exerciseID , ExerciseRequest request);
+
+
 
 }

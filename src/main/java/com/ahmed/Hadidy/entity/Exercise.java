@@ -1,7 +1,6 @@
 package com.ahmed.Hadidy.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Exercise {
 
     @Id
@@ -32,7 +30,7 @@ public class Exercise {
     @Column(name ="picture")
     private String picture;
 
-    @ManyToOne
-    @JoinColumn(name = "workout_day_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "workout_day_id", nullable = false)
     private WorkoutDay workoutDay;
 }

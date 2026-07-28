@@ -1,0 +1,223 @@
+{
+  "info": {
+    "_postman_id": "82c87438-a66d-41e7-bd6b-4e58b6e6bde4",
+    "name": "Hadidy API",
+    "description": "Import this collection in Postman. Set baseUrl, username, password, and resource-id variables after creating resources. All endpoints except Register use HTTP Basic authentication. Note: SecurityConfig must permit /api/users/register (it currently permits /api/user/register).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "username", "value": "" },
+    { "key": "password", "value": "" },
+    { "key": "workoutPlanId", "value": "1" },
+    { "key": "workoutDayId", "value": "1" },
+    { "key": "exerciseId", "value": "1" },
+    { "key": "dietPlanId", "value": "1" },
+    { "key": "mealId", "value": "1" },
+    { "key": "supplementId", "value": "1" }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{username}}", "type": "string" },
+      { "key": "password", "value": "{{password}}", "type": "string" }
+    ]
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register user",
+          "auth": { "type": "noauth" },
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"ahmed\",\n  \"password\": \"password123\"\n}" },
+            "url": "{{baseUrl}}/api/users/register"
+          }
+        },
+        {
+          "name": "Change my password",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"oldPass\": \"password123\",\n  \"newPass\": \"newpassword123\"\n}" },
+            "url": "{{baseUrl}}/api/users/me/password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        { "name": "Get my profile", "request": { "method": "GET", "url": "{{baseUrl}}/api/users/me/profile" } },
+        {
+          "name": "Update my profile",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Ahmed\",\n  \"weight\": 75.0,\n  \"height\": 175.0,\n  \"gymPrice\": 500.0,\n  \"goal\": \"Build muscle\",\n  \"startSubscribe\": \"2026-01-01\",\n  \"endSubscribe\": \"2026-12-31\",\n  \"profilePicture\": \"https://example.com/profile.jpg\",\n  \"gmail\": \"ahmed@example.com\"\n}" },
+            "url": "{{baseUrl}}/api/users/me/profile"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workout plans",
+      "item": [
+        {
+          "name": "Create workout plan",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Push Pull Legs\",\n  \"description\": \"Three-day split\",\n  \"picture\": \"https://example.com/plan.jpg\"\n}" },
+            "url": "{{baseUrl}}/api/workout-plan"
+          }
+        },
+        { "name": "List workout plans", "request": { "method": "GET", "url": "{{baseUrl}}/api/workout-plan" } },
+        { "name": "Get workout plan", "request": { "method": "GET", "url": "{{baseUrl}}/api/workout-plan/{{workoutPlanId}}" } },
+        {
+          "name": "Update workout plan",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated plan name\"\n}" },
+            "url": "{{baseUrl}}/api/workout-plan/{{workoutPlanId}}"
+          }
+        },
+        { "name": "Delete workout plan", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/workout-plan/{{workoutPlanId}}" } }
+      ]
+    },
+    {
+      "name": "Workout days",
+      "item": [
+        {
+          "name": "Create workout day",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Push day\",\n  \"totalExercises\": 5,\n  \"totalRepeat\": 50,\n  \"expectedTime\": 60.0,\n  \"description\": \"Chest, shoulders, triceps\",\n  \"image\": \"https://example.com/push.jpg\"\n}" },
+            "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days"
+          }
+        },
+        { "name": "List workout days", "request": { "method": "GET", "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days" } },
+        { "name": "Get workout day", "request": { "method": "GET", "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}" } },
+        {
+          "name": "Update workout day",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"expectedTime\": 75.0\n}" },
+            "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}"
+          }
+        },
+        { "name": "Delete workout day", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}" } }
+      ]
+    },
+    {
+      "name": "Exercises",
+      "item": [
+        {
+          "name": "Create exercise",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Bench press\",\n  \"description\": \"Barbell bench press\",\n  \"repeat\": 10,\n  \"sets\": 3,\n  \"picture\": \"https://example.com/bench.jpg\"\n}" },
+            "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}/exercises"
+          }
+        },
+        { "name": "List exercises", "request": { "method": "GET", "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}/exercises" } },
+        { "name": "Get exercise", "request": { "method": "GET", "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}/exercises/{{exerciseId}}" } },
+        {
+          "name": "Update exercise",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"sets\": 4,\n  \"repeat\": 8\n}" },
+            "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}/exercises/{{exerciseId}}"
+          }
+        },
+        { "name": "Delete exercise", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/workout-plans/{{workoutPlanId}}/days/{{workoutDayId}}/exercises/{{exerciseId}}" } }
+      ]
+    },
+    {
+      "name": "Diet plans",
+      "item": [
+        {
+          "name": "Create diet plan",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Cutting plan\",\n  \"description\": \"High-protein calorie deficit\"\n}" },
+            "url": "{{baseUrl}}/api/diet-plans"
+          }
+        },
+        { "name": "List diet plans", "request": { "method": "GET", "url": "{{baseUrl}}/api/diet-plans" } },
+        { "name": "Get diet plan", "request": { "method": "GET", "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}" } },
+        {
+          "name": "Update diet plan",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"description\": \"Updated description\"\n}" },
+            "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}"
+          }
+        },
+        { "name": "Delete diet plan", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}" } }
+      ]
+    },
+    {
+      "name": "Meals",
+      "item": [
+        {
+          "name": "Create meal",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Chicken and rice\",\n  \"recipe\": \"Grill chicken and serve with rice\",\n  \"photo\": \"https://example.com/meal.jpg\",\n  \"calories\": 650.0,\n  \"protein\": 50.0,\n  \"carbs\": 70.0,\n  \"fats\": 15.0,\n  \"time\": \"13:00\"\n}" },
+            "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}/meals"
+          }
+        },
+        { "name": "List meals", "request": { "method": "GET", "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}/meals" } },
+        { "name": "Get meal", "request": { "method": "GET", "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}/meals/{{mealId}}" } },
+        {
+          "name": "Update meal",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"calories\": 700.0\n}" },
+            "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}/meals/{{mealId}}"
+          }
+        },
+        { "name": "Delete meal", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/diet-plans/{{dietPlanId}}/meals/{{mealId}}" } }
+      ]
+    },
+    {
+      "name": "Supplements",
+      "item": [
+        {
+          "name": "Create supplement",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Whey protein\",\n  \"description\": \"24g protein per serving\",\n  \"price\": 1500.0,\n  \"picture\": \"https://example.com/whey.jpg\"\n}" },
+            "url": "{{baseUrl}}/api/supplements"
+          }
+        },
+        { "name": "List supplements", "request": { "method": "GET", "url": "{{baseUrl}}/api/supplements" } },
+        { "name": "Get supplement", "request": { "method": "GET", "url": "{{baseUrl}}/api/supplements/{{supplementId}}" } },
+        {
+          "name": "Update supplement",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"price\": 1600.0\n}" },
+            "url": "{{baseUrl}}/api/supplements/{{supplementId}}"
+          }
+        },
+        { "name": "Delete supplement", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/supplements/{{supplementId}}" } }
+      ]
+    }
+  ]
+}
