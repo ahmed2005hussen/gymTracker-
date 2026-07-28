@@ -1,26 +1,107 @@
 # 🏋️ Hadidy - Gym Tracker Backend
 
-A backend REST API for a Gym Tracking platform built with **Java** and **Spring Boot**. The application helps users manage workout plans, exercises, diet plans, meals, supplements, and personal profiles while providing secure authentication and a clean layered architecture.
+A production-ready **RESTful API** built with **Java 21** and **Spring Boot** for managing workouts, diet plans, meals, supplements, and user profiles.
+
+The project follows a clean layered architecture using **Spring Security**, **Spring Data JPA**, **Hibernate**, **DTOs**, **Validation**, and **Global Exception Handling** to provide a secure, scalable, and maintainable backend application.
 
 ---
 
-## 🚀 Features
+# ✨ Features
 
-- 🔐 User Authentication with Spring Security
+- 🔐 Secure User Authentication
 - 👤 User Profile Management
-- 💪 Workout Plans & Workout Days Management
+- 💪 Workout Plans Management
+- 📅 Workout Days Management
 - 🏃 Exercise Management
-- 🥗 Diet Plans & Meals Management
-- 💊 Supplements Management
+- 🥗 Diet Plans Management
+- 🍽️ Meal Management
+- 💊 Supplement Management
+- 📦 DTO-based API Responses
 - ✅ Request Validation
 - ⚠️ Global Exception Handling
-- 📦 DTO-based API Responses
+- 🔒 Spring Security
 - 🗄️ MySQL Database Integration
-- 🏛️ Layered Architecture (Controller → Service → Repository)
+- 🏛️ Layered Architecture
 
 ---
 
-## 🛠️ Tech Stack
+# 📸 Application Preview
+
+## 🏠 Home Dashboard
+
+<p align="center">
+    <img src="images/home.png" width="900">
+</p>
+
+---
+
+## 💪 Workout Plans
+
+<p align="center">
+    <img src="images/workoutPlanPage.png" width="900">
+</p>
+
+---
+
+## 📅 Workout Days
+
+<p align="center">
+    <img src="images/workoutDayPage.png" width="900">
+</p>
+
+---
+
+## 🏃 Exercises
+
+<p align="center">
+    <img src="images/exercisepage.png" width="900">
+</p>
+
+---
+
+# 📖 API Documentation (Swagger)
+
+<p align="center">
+    <img src="images/swagger1.png" width="48%">
+    <img src="images/swagger2.png" width="48%">
+</p>
+
+<p align="center">
+    <img src="images/swagger3.png" width="48%">
+    <img src="images/swagger4.png" width="48%">
+</p>
+
+---
+
+# 🏗️ Architecture
+
+```text
+                HTTP Request
+                     │
+                     ▼
+              REST Controller
+                     │
+                     ▼
+                  Service
+                     │
+                     ▼
+                Repository
+                     │
+                     ▼
+             MySQL Database
+```
+
+The project follows a layered architecture that provides:
+
+- Maintainability
+- Scalability
+- Readability
+- Testability
+- Separation of Concerns
+
+---
+
+# 🛠️ Tech Stack
 
 ### Backend
 
@@ -39,33 +120,35 @@ A backend REST API for a Gym Tracking platform built with **Java** and **Spring 
 
 - Maven
 
-### Tools
+### Development Tools
 
 - IntelliJ IDEA
-- Postman
 - Git
 - GitHub
+- Postman
+- Swagger / OpenAPI
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```
+```text
 src
- ├── config
- ├── controllers
- ├── dto
- ├── entity
- ├── exceptions
- ├── repository
- ├── service
- └── HadidyApplication.java
+├── config
+├── controllers
+├── dto
+├── entity
+├── exceptions
+├── repository
+├── service
+└── HadidyApplication.java
 ```
 
 ---
 
-## 📚 Main Modules
+# 📚 Main Modules
 
+- Authentication
 - User
 - Profile
 - Workout Plan
@@ -78,113 +161,149 @@ src
 
 ---
 
-## 🔒 Security
+# 🔐 Security
 
-The project uses **Spring Security** to secure application endpoints and manage user authentication.
+The application uses **Spring Security** to secure endpoints and authenticate users.
 
 Current implementation includes:
 
-- User authentication
-- Password encryption
-- Role-based foundation
-- Protected endpoints
+- User Authentication
+- Password Encryption using BCrypt
+- Protected REST Endpoints
+- Authentication-based Resource Access
+- Foundation for Role-Based Authorization
 
 ---
 
-## 📡 REST APIs
+# 📡 REST APIs
 
-The project exposes REST APIs for managing:
+The backend exposes REST APIs for managing:
 
-- Users
-- Profiles
-- Workout Plans
-- Workout Days
-- Exercises
-- Diet Plans
-- Meals
-- Supplements
+| Module | Status |
+|---------|:------:|
+| Authentication | ✅ |
+| Users | ✅ |
+| Profiles | ✅ |
+| Workout Plans | ✅ |
+| Workout Days | ✅ |
+| Exercises | ✅ |
+| Diet Plans | ✅ |
+| Meals | ✅ |
+| Supplements | ✅ |
+
+Swagger screenshots above provide a quick overview of the available endpoints.
 
 ---
 
-## 🏗️ Architecture
+# 📖 Sample API
 
-The application follows a layered architecture:
+### Register User
 
+#### Request
+
+```http
+POST /api/auth/register
 ```
-Controller
-     ↓
-Service
-     ↓
-Repository
-     ↓
-Database
+
+```json
+{
+  "username": "Ahmed",
+  "email": "ahmed@example.com",
+  "password": "password123"
+}
 ```
 
-This structure improves:
+#### Response
 
-- Maintainability
-- Scalability
-- Testability
-- Separation of Concerns
+```json
+{
+  "id": 1,
+  "username": "Ahmed",
+  "email": "ahmed@example.com"
+}
+```
 
 ---
 
-## ⚙️ Getting Started
+# ⚙️ Getting Started
 
-### Clone the repository
+## 1. Clone the repository
 
 ```bash
 git clone https://github.com/ahmed2005hussen/gymTracker-.git
 ```
 
-### Navigate to the project
+---
+
+## 2. Navigate to the project
 
 ```bash
 cd gymTracker-
 ```
 
-### Configure the database
+---
 
-Update your `application.properties`:
+## 3. Configure MySQL
+
+Update your `application.properties` file.
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/gymtracker
+
 spring.datasource.username=YOUR_USERNAME
+
 spring.datasource.password=YOUR_PASSWORD
 ```
 
-### Run the application
+---
+
+## 4. Build the project
 
 ```bash
-./mvnw spring-boot:run
+mvn clean install
 ```
 
-or
+---
+
+## 5. Run the application
 
 ```bash
 mvn spring-boot:run
 ```
 
+or
+
+```bash
+./mvnw spring-boot:run
+```
+
 ---
 
-## 📈 Future Improvements
+# 🚀 Future Improvements
 
 - JWT Authentication
+- Refresh Tokens
 - Role-Based Authorization
-- Swagger / OpenAPI Documentation
+- Email Verification
+- Password Reset
 - Docker Support
-- Unit & Integration Tests
+- Unit Testing
+- Integration Testing
 - Pagination & Sorting
 - Logging
 - File Uploads
-- Email Verification
-- Password Reset
+- CI/CD Pipeline
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
-Ahmed Hussein
+### Ahmed Hussein
 
-- GitHub: https://github.com/ahmed2005hussen
-- LinkedIn: https://linkedin.com/in/ahmed-elsherif-119b60337/
+**GitHub**
+
+https://github.com/ahmed2005hussen
+
+**LinkedIn**
+
+https://linkedin.com/in/ahmed-elsherif-119b60337
