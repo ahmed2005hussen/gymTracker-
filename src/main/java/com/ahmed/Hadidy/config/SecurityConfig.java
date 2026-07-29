@@ -24,7 +24,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // <-- مضاف
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- مضاف، ضروري للـ preflight
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/", "/index.html", "/static/**", "/css/**", "/js/**", "/images/**", "/*.html", "/*.css", "/*.js").permitAll()
                         .requestMatchers("/api/users/register", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
