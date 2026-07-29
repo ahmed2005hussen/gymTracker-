@@ -25,34 +25,34 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 .authorizeHttpRequests(auth -> auth
+//
+//                        .requestMatchers(
+//                                "/",
+//                                "/index.html",
+//                                "/Login.html",
+//                                "/Register.html"
+//                        ).permitAll()
+//
+//                        // files static
+//                        .requestMatchers(
+//                                "/images/**",
+//                                "/api.js",
+//                                "/style.css",
+//                                "/favicon.ico"
+//                        ).permitAll()
+//
+//                        // Swagger
+//                        .requestMatchers(
+//                                "/ahmed-ui.html",
+//                                "/swagger-ui/**",
+//                                "/v3/api-docs/**",
+//                                "/my-api-docs/**"
+//                        ).permitAll()
+//
+//                        // APIs general
+//                        .requestMatchers("/api/users/register").permitAll()
 
-                        .requestMatchers(
-                                "/",
-                                "/index.html",
-                                "/Login.html",
-                                "/Register.html"
-                        ).permitAll()
-
-                        // files static
-                        .requestMatchers(
-                                "/images/**",
-                                "/api.js",
-                                "/style.css",
-                                "/favicon.ico"
-                        ).permitAll()
-
-                        // Swagger
-                        .requestMatchers(
-                                "/ahmed-ui.html",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/my-api-docs/**"
-                        ).permitAll()
-
-                        // APIs general
-                        .requestMatchers("/api/users/register").permitAll()
-
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 )
 
                 .httpBasic(withDefaults());
