@@ -12,6 +12,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 public class SecurityConfig {
 
@@ -23,37 +25,37 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 .authorizeHttpRequests(auth -> auth
-//
-//                        .requestMatchers(
-//                                "/",
-//                                "/index.html",
-//                                "/Login.html",
-//                                "/Register.html"
-//                        ).permitAll()
-//
-//                        // files static
-//                        .requestMatchers(
-//                                "/images/**",
-//                                "/api.js",
-//                                "/style.css",
-//                                "/favicon.ico"
-//                        ).permitAll()
-//
-//                        // Swagger
-//                        .requestMatchers(
-//                                "/ahmed-ui.html",
-//                                "/swagger-ui/**",
-//                                "/v3/api-docs/**",
-//                                "/my-api-docs/**"
-//                        ).permitAll()
-//
-//                        // APIs general
-//                        .requestMatchers("/api/users/register").permitAll()
 
-                                .anyRequest().permitAll()
-                );
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/Login.html",
+                                "/Register.html"
+                        ).permitAll()
 
-//                .httpBasic(withDefaults());
+                        // files static
+                        .requestMatchers(
+                                "/images/**",
+                                "/api.js",
+                                "/style.css",
+                                "/favicon.ico"
+                        ).permitAll()
+
+                        // Swagger
+                        .requestMatchers(
+                                "/ahmed-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/my-api-docs/**"
+                        ).permitAll()
+
+                        // APIs general
+                        .requestMatchers("/api/users/register").permitAll()
+
+                        .anyRequest().authenticated()
+                )
+
+                .httpBasic(withDefaults());
 
         return http.build();
     }
