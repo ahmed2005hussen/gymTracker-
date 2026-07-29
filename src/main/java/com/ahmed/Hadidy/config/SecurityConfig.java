@@ -2,7 +2,6 @@ package com.ahmed.Hadidy.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,15 +19,42 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // <-- مضاف
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/", "/index.html", "/static/**", "/css/**", "/js/**", "/images/**", "/*.html", "/*.css", "/*.js").permitAll()
-                        .requestMatchers("/api/users/register", "/error").permitAll()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/Login.html",
+                                "/Register.html"
+                        ).permitAll()
+
+                        // files static
+                        .requestMatchers(
+                                "/images/**",
+                                "/api.js",
+                                "/style.css",
+                                "/favicon.ico"
+                        ).permitAll()
+
+                        // Swagger
+                        .requestMatchers(
+                                "/ahmed-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/my-api-docs/**"
+                        ).permitAll()
+
+                        // APIs general
+                        .requestMatchers("/api/users/register").permitAll()
+
                         .anyRequest().authenticated()
                 )
+
                 .httpBasic(withDefaults());
 
         return http.build();
