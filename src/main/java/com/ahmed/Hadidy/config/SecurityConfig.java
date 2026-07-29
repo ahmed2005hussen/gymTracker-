@@ -12,8 +12,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 public class SecurityConfig {
 
@@ -52,10 +50,10 @@ public class SecurityConfig {
 //                        // APIs general
 //                        .requestMatchers("/api/users/register").permitAll()
 
-                                .anyRequest().authenticated()
-                )
+                                .anyRequest().permitAll()
+                );
 
-                .httpBasic(withDefaults());
+//                .httpBasic(withDefaults());
 
         return http.build();
     }
