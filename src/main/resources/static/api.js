@@ -1,4 +1,4 @@
-const HADIDY_API_URL = 'http://localhost:8080';
+const HADIDY_API_URL = '';
 const HADIDY_AUTH_KEY = 'hadidy_basic_auth';
 
 function setAuth(username, password) {
