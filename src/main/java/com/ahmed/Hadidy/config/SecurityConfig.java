@@ -38,6 +38,16 @@ public class SecurityConfig {
                                 "/favicon.ico"
                         ).permitAll()
 
+                        .requestMatchers(
+                                "/images/**",
+                                "/api.js",
+                                "/style.css",
+                                "/favicon.ico",
+                                "/apple-touch-icon*.png",
+                                "/*.png",
+                                "/*.ico"
+                        ).permitAll()
+
                         // Swagger
                         .requestMatchers(
                                 "/ahmed-ui.html",
