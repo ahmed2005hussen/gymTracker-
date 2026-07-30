@@ -19,7 +19,6 @@ public class UserRequest {
 
     @Size(min = 8)
     @NotBlank(message = "enter valid Pass")
-
     private String password ;
 
 }
