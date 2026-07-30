@@ -47,7 +47,6 @@ public class SecurityConfig {
                                 "/*.png",
                                 "/*.ico"
                         ).permitAll()
-
                         // Swagger
                         .requestMatchers(
                                 "/ahmed-ui.html",
