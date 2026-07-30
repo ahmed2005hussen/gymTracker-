@@ -28,11 +28,8 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/",
-                                "/index.html",
-                                "/Login.html",
-                                "/Register.html"
+                                "/*.html"
                         ).permitAll()
-
                         // files static
                         .requestMatchers(
                                 "/images/**",
