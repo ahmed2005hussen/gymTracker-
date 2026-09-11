@@ -21,7 +21,7 @@ public class DietPlanController {
 
     private final DietPlanService dietPlanService;
 
-    @PostMapping
+    @PostMapping(version = "1.0")
     public ResponseEntity<DietPlanResponse> createDietPlan(@Valid @RequestBody CreateDietPlanRequest request
             , Authentication authentication) {
 
@@ -31,7 +31,7 @@ public class DietPlanController {
     }
 
 
-    @GetMapping
+    @GetMapping(version = "1.0")
     public ResponseEntity<List<DietPlanResponse>> listDietPlan(Authentication authentication) {
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -40,7 +40,7 @@ public class DietPlanController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<DietPlanResponse> getDietPlan
             (Authentication authentication, @PathVariable Long id) {
 
@@ -52,7 +52,7 @@ public class DietPlanController {
     }
 
 
-    @PatchMapping("/{id}")
+    @PatchMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<DietPlanResponse> editDietPlan
             (@PathVariable Long id, @RequestBody DietPlanRequest request,
              Authentication authentication
@@ -63,7 +63,7 @@ public class DietPlanController {
         );
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<String> deleteDietPlan
             (@PathVariable Long id, Authentication authentication) {
 
@@ -73,6 +73,5 @@ public class DietPlanController {
         );
 
     }
-
 
 }

@@ -20,7 +20,7 @@ public class MealController {
 
     private final MealService mealService;
 
-    @PostMapping
+    @PostMapping(version = "1.0")
     public ResponseEntity<MealResponse> createMeal(
             @Valid @RequestBody CreateMealRequest request
             , Authentication authentication,
@@ -30,8 +30,7 @@ public class MealController {
 
     }
 
-
-    @GetMapping
+    @GetMapping(version = "1.0")
     public ResponseEntity<List<MealResponse>> listMeal(Authentication authentication
             , @PathVariable Long dietPlanId) {
 
@@ -42,8 +41,7 @@ public class MealController {
 
     }
 
-
-    @GetMapping("/{mealId}")
+    @GetMapping(value = "/{mealId}",version = "1.0")
     public ResponseEntity<MealResponse> getMeal(Authentication authentication,
                                                 @PathVariable Long dietPlanId,
                                                 @PathVariable Long mealId) {
@@ -54,8 +52,7 @@ public class MealController {
 
     }
 
-
-    @DeleteMapping("/{mealId}")
+    @DeleteMapping(value = "/{mealId}",version = "1.0")
     public ResponseEntity<String> deleteMeal(@PathVariable Long dietPlanId,
                                              @PathVariable Long mealId,
                                              Authentication authentication) {
@@ -69,8 +66,7 @@ public class MealController {
 
     }
 
-
-    @PatchMapping("/{mealId}")
+    @PatchMapping(value = "/{mealId}",version = "1.0")
    public ResponseEntity<MealResponse> editMeal
             (@PathVariable Long dietPlanId,
              @PathVariable Long mealId,

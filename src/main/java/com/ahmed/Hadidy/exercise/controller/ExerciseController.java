@@ -20,7 +20,7 @@ public class ExerciseController {
 
     final private ExerciseService exerciseService;
 
-    @PostMapping
+    @PostMapping(version = "1.0")
     public ResponseEntity<ExerciseResponse> createExercise(
             @Valid @RequestBody CreateExerciseRequest request
             , Authentication authentication,
@@ -34,7 +34,7 @@ public class ExerciseController {
     }
 
 
-    @GetMapping
+    @GetMapping(version = "1.0")
     public ResponseEntity<List<ExerciseResponse>> listExercise
             (Authentication authentication,
              @PathVariable long workoutPlanId,
@@ -46,7 +46,7 @@ public class ExerciseController {
         );
     }
 
-    @GetMapping("/{exerciseId}")
+    @GetMapping(value = "/{exerciseId}" , version = "1.0")
     public ResponseEntity<ExerciseResponse> getExercise(Authentication authentication,
                                                         @PathVariable Long workoutPlanId,
                                                         @PathVariable Long workoutDayId,
@@ -61,7 +61,7 @@ public class ExerciseController {
     }
 
 
-    @DeleteMapping("/{exerciseId}")
+    @DeleteMapping(value = "/{exerciseId}" , version = "1.0")
     public ResponseEntity<String> deleteExercise(@PathVariable Long workoutPlanId,
                                                  @PathVariable Long workoutDayId,
                                                  @PathVariable Long exerciseId,
@@ -75,7 +75,7 @@ public class ExerciseController {
         );
     }
 
-    @PatchMapping("/{exerciseId}")
+    @PatchMapping(value = "/{exerciseId}" , version = "1.0")
     public ResponseEntity<ExerciseResponse> editExercise(@PathVariable Long workoutPlanId,
                                                          @PathVariable Long workoutDayId,
                                                          @PathVariable Long exerciseId,

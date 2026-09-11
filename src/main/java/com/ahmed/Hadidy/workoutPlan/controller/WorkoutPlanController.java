@@ -21,7 +21,7 @@ public class WorkoutPlanController {
 
     final private WorkoutPlanService workoutPlanService;
 
-    @PostMapping
+    @PostMapping(version = "1.0")
     public ResponseEntity<WorkoutPlanResponse> createWorkoutPlan(@Valid @RequestBody CreateWorkoutPlanRequest request
             , Authentication authentication) {
 
@@ -31,7 +31,7 @@ public class WorkoutPlanController {
 
     }
 
-    @GetMapping
+    @GetMapping(version = "1.0")
     public ResponseEntity<List<WorkoutPlanResponse>> listWorkoutPlan(Authentication authentication) {
 
 
@@ -41,7 +41,7 @@ public class WorkoutPlanController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<WorkoutPlanResponse> getWorkoutPlan(Authentication authentication,
                                                               @PathVariable Long id) {
 
@@ -51,7 +51,7 @@ public class WorkoutPlanController {
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}" , version = "1.0")
     public ResponseEntity<String> deleteWorkoutPlan(@PathVariable Long id,
                                                     Authentication authentication) {
 
@@ -63,7 +63,7 @@ public class WorkoutPlanController {
 
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping(value = "/{id}" , version = "1.0")
     public ResponseEntity<WorkoutPlanResponse> editWorkoutPlan(@PathVariable Long id
             , @RequestBody WorkoutPlanRequest request, Authentication authentication) {
 

@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register",version = "1.0")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRequest user) {
 
         userService.registerUser(user);
@@ -27,7 +27,7 @@ public class UserController {
 
     }
 
-    @PatchMapping("/me/password")
+    @PatchMapping(value = "/me/password",version = "1.0")
     public ResponseEntity<String> editPassword(@Valid @RequestBody EditPasswordRequest request,
                                                Authentication authentication) {
 

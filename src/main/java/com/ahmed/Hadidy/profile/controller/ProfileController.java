@@ -17,7 +17,7 @@ public class ProfileController {
 
     final private ProfileService profileService;
 
-    @PatchMapping
+    @PatchMapping(version = "1.0")
     public ResponseEntity<ProfileResponse> editProfile(@Valid @RequestBody ProfileRequest request,
                                                        Authentication authentication
     ) {
@@ -31,7 +31,7 @@ public class ProfileController {
 
     }
 
-    @GetMapping
+    @GetMapping(version = "1.0")
     public ResponseEntity<ProfileResponse> getProfile(Authentication authentication) {
 
         return ResponseEntity.status(HttpStatus.OK).body(

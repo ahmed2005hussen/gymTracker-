@@ -20,7 +20,7 @@ public class SupplementController {
 
     private final SupplementService supplementService;
 
-    @PostMapping
+    @PostMapping(version = "1.0")
     public ResponseEntity<SupplementResponse> createSupplement(@RequestBody @Valid CreateSupplementRequest request
             , Authentication authentication) {
 
@@ -31,7 +31,7 @@ public class SupplementController {
 
     }
 
-    @GetMapping
+    @GetMapping(version = "1.0")
     public ResponseEntity<List<SupplementResponse>> listSupplement(Authentication authentication) {
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -40,7 +40,7 @@ public class SupplementController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<SupplementResponse> getSupplement
             (Authentication authentication, @PathVariable Long id) {
 
@@ -49,11 +49,9 @@ public class SupplementController {
 
     }
 
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<String> deleteSupplement
             (@PathVariable Long id, Authentication authentication) {
-
 
         supplementService.deleteSupplement(id, authentication.getName());
 
@@ -61,7 +59,8 @@ public class SupplementController {
                 "Supplement is Deleted"
         );
     }
-    @PatchMapping("/{id}")
+
+    @PatchMapping(value = "/{id}", version = "1.0")
     public ResponseEntity<SupplementResponse> editSupplement
             (@PathVariable Long id, @Valid @RequestBody SupplementRequest request,
              Authentication authentication
