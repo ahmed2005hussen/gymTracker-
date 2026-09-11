@@ -1,12 +1,12 @@
 //package com.ahmed.Hadidy.controllers;
 //
-//import com.ahmed.Hadidy.entity.Profile;
-//import com.ahmed.Hadidy.entity.User;
-//import com.ahmed.Hadidy.entity.WorkoutDay;
-//import com.ahmed.Hadidy.entity.WorkoutPlan;
-//import com.ahmed.Hadidy.repository.UserRepository;
-//import com.ahmed.Hadidy.repository.WorkoutDayRepository;
-//import com.ahmed.Hadidy.repository.WorkoutPlanRepository;
+//import com.ahmed.Hadidy.profile.entity.Profile;
+//import com.ahmed.Hadidy.user.entity.User;
+//import com.ahmed.Hadidy.workoutDay.entity.WorkoutDay;
+//import com.ahmed.Hadidy.workoutPlan.entity.WorkoutPlan;
+//import com.ahmed.Hadidy.user.repository.UserRepository;
+//import com.ahmed.Hadidy.workoutDay.repository.WorkoutDayRepository;
+//import com.ahmed.Hadidy.workoutPlan.repository.WorkoutPlanRepository;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.junit.jupiter.api.extension.ExtendWith;

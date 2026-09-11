@@ -1,0 +1,35 @@
+package com.ahmed.Hadidy.meal.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class CreateMealRequest {
+
+    @NotBlank
+    private String name;
+
+    private String recipe;
+
+    private String photo;
+
+    @PositiveOrZero
+    private Double calories;
+
+    @PositiveOrZero
+    private Double protein;
+
+    @PositiveOrZero
+    private Double carbs;
+
+    @PositiveOrZero
+    private Double fats;
+
+    private String time;
+
+}

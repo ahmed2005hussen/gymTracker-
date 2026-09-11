@@ -1,13 +1,14 @@
 package com.ahmed.Hadidy.service.Implementations;
 
-import com.ahmed.Hadidy.dto.request.EditPasswordRequest;
-import com.ahmed.Hadidy.dto.request.UserRequest;
-import com.ahmed.Hadidy.entity.User;
-import com.ahmed.Hadidy.exceptions.IncorrectPasswordException;
-import com.ahmed.Hadidy.exceptions.UserNotFoundException;
-import com.ahmed.Hadidy.exceptions.UsernameAlreadyExistsException;
-import com.ahmed.Hadidy.repository.UserRepository;
+import com.ahmed.Hadidy.user.dto.EditPasswordRequest;
+import com.ahmed.Hadidy.user.dto.UserRequest;
+import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.exception.IncorrectPasswordException;
+import com.ahmed.Hadidy.exception.UserNotFoundException;
+import com.ahmed.Hadidy.exception.UsernameAlreadyExistsException;
+import com.ahmed.Hadidy.user.repository.UserRepository;
 import com.ahmed.Hadidy.support.TestResultLogger;
+import com.ahmed.Hadidy.user.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

@@ -1,0 +1,22 @@
+package com.ahmed.Hadidy.workoutPlan.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateWorkoutPlanRequest {
+
+    @NotBlank
+    private String name ;
+
+    private String description ;
+
+    private String picture ;
+
+}

@@ -1,11 +1,12 @@
 package com.ahmed.Hadidy.service.Implementations;
 
-import com.ahmed.Hadidy.dto.response.ProfileResponse;
-import com.ahmed.Hadidy.dto.request.ProfileRequest;
-import com.ahmed.Hadidy.entity.Profile;
-import com.ahmed.Hadidy.entity.User;
-import com.ahmed.Hadidy.repository.ProfileRepository;
-import com.ahmed.Hadidy.service.interfaces.UserService;
+import com.ahmed.Hadidy.profile.dto.ProfileResponse;
+import com.ahmed.Hadidy.profile.dto.ProfileRequest;
+import com.ahmed.Hadidy.profile.entity.Profile;
+import com.ahmed.Hadidy.profile.service.impl.ProfileServiceImplementation;
+import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.profile.repository.ProfileRepository;
+import com.ahmed.Hadidy.user.service.UserService;
 import com.ahmed.Hadidy.support.TestResultLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,14 @@
 package com.ahmed.Hadidy.service.Implementations;
 
-import com.ahmed.Hadidy.dto.response.SupplementResponse;
-import com.ahmed.Hadidy.dto.request.CreateSupplementRequest;
-import com.ahmed.Hadidy.dto.request.SupplementRequest;
-import com.ahmed.Hadidy.entity.Profile;
-import com.ahmed.Hadidy.entity.Supplement;
-import com.ahmed.Hadidy.entity.User;
-import com.ahmed.Hadidy.repository.SupplementRepository;
-import com.ahmed.Hadidy.repository.UserRepository;
+import com.ahmed.Hadidy.supplement.dto.SupplementResponse;
+import com.ahmed.Hadidy.supplement.dto.CreateSupplementRequest;
+import com.ahmed.Hadidy.supplement.dto.SupplementRequest;
+import com.ahmed.Hadidy.profile.entity.Profile;
+import com.ahmed.Hadidy.supplement.entity.Supplement;
+import com.ahmed.Hadidy.supplement.service.impl.SupplementServiceImpl;
+import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.supplement.repository.SupplementRepository;
+import com.ahmed.Hadidy.user.repository.UserRepository;
 import com.ahmed.Hadidy.support.TestResultLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

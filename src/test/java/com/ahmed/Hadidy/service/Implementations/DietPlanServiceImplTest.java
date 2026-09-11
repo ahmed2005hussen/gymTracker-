@@ -1,13 +1,14 @@
 package com.ahmed.Hadidy.service.Implementations;
 
-import com.ahmed.Hadidy.dto.response.DietPlanResponse;
-import com.ahmed.Hadidy.dto.request.CreateDietPlanRequest;
-import com.ahmed.Hadidy.dto.request.DietPlanRequest;
-import com.ahmed.Hadidy.entity.DietPlan;
-import com.ahmed.Hadidy.entity.Profile;
-import com.ahmed.Hadidy.entity.User;
-import com.ahmed.Hadidy.repository.DietPlanRepository;
-import com.ahmed.Hadidy.repository.UserRepository;
+import com.ahmed.Hadidy.diet.dto.DietPlanResponse;
+import com.ahmed.Hadidy.diet.dto.CreateDietPlanRequest;
+import com.ahmed.Hadidy.diet.dto.DietPlanRequest;
+import com.ahmed.Hadidy.diet.entity.DietPlan;
+import com.ahmed.Hadidy.diet.service.impl.DietPlanServiceImpl;
+import com.ahmed.Hadidy.profile.entity.Profile;
+import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.diet.repository.DietPlanRepository;
+import com.ahmed.Hadidy.user.repository.UserRepository;
 import com.ahmed.Hadidy.support.TestResultLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
