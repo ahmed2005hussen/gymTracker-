@@ -1,0 +1,7 @@
+Need to edit:
+    - JWT
+    - Filter
+    - Security
+    - Exception
+    - Docker compose
+    - postman apis
