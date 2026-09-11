@@ -3,7 +3,7 @@ package com.ahmed.Hadidy.profile.service.impl;
 import com.ahmed.Hadidy.profile.dto.ProfileRequest;
 import com.ahmed.Hadidy.profile.dto.ProfileResponse;
 import com.ahmed.Hadidy.profile.entity.Profile;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.exception.UserNotFoundException;
 import com.ahmed.Hadidy.profile.repository.ProfileRepository;
 import com.ahmed.Hadidy.profile.service.ProfileService;
@@ -27,7 +27,7 @@ public class ProfileServiceImplementation implements ProfileService {
     @Override
     @Transactional
     public ProfileResponse editProfile(ProfileRequest request, String username) {
-        User user = userService.findByUsername(username)
+        HadidyUser user = userService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(username));
 
 
@@ -81,7 +81,7 @@ public class ProfileServiceImplementation implements ProfileService {
     @Override
     public ProfileResponse getProfile(String username) {
 
-        User user = userService.findByUsername(username).orElseThrow(
+        HadidyUser user = userService.findByUsername(username).orElseThrow(
                 () -> new UserNotFoundException(username)
         );
 

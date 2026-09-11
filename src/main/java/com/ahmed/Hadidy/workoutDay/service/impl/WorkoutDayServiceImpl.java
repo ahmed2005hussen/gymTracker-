@@ -4,7 +4,7 @@ package com.ahmed.Hadidy.workoutDay.service.impl;
 import com.ahmed.Hadidy.workoutDay.dto.CreateWorkoutDayRequest;
 import com.ahmed.Hadidy.workoutDay.dto.WorkoutDayRequest;
 import com.ahmed.Hadidy.workoutDay.dto.WorkoutDayResponse;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.workoutDay.entity.WorkoutDay;
 import com.ahmed.Hadidy.workoutPlan.entity.WorkoutPlan;
 import com.ahmed.Hadidy.exception.DataNotExist;
@@ -26,7 +26,7 @@ public class WorkoutDayServiceImpl implements WorkoutDayService {
     private final UserRepository userRepository;
     private final WorkoutPlanRepository workoutPlanRepository;
 
-    private User findByUsername(String username) {
+    private HadidyUser findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(
                 () -> new UserNotFoundException(username)
         );
@@ -36,7 +36,7 @@ public class WorkoutDayServiceImpl implements WorkoutDayService {
     public WorkoutDayResponse createWorkoutDay(String username, Long workoutPlanId,
                                                CreateWorkoutDayRequest request) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
@@ -61,7 +61,7 @@ public class WorkoutDayServiceImpl implements WorkoutDayService {
     @Override
     public List<WorkoutDayResponse> listWorkoutDay(String username, Long workoutPlanId) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
@@ -75,7 +75,7 @@ public class WorkoutDayServiceImpl implements WorkoutDayService {
     @Override
     public WorkoutDayResponse getWorkoutDay(String username, Long workoutPlanId, Long workoutDayId) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
@@ -90,7 +90,7 @@ public class WorkoutDayServiceImpl implements WorkoutDayService {
 
     @Override
     public void deleteWorkoutDay(String username, Long workoutPlanId, Long workoutDayId) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(workoutPlanId, user.getProfile().getId())
@@ -106,7 +106,7 @@ public class WorkoutDayServiceImpl implements WorkoutDayService {
     @Override
     public WorkoutDayResponse editWorkoutDay(String username, Long workoutPlanId, Long workoutDayId, WorkoutDayRequest request) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(workoutPlanId, user.getProfile().getId())

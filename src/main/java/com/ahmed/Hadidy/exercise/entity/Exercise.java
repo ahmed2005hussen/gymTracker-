@@ -1,5 +1,6 @@
 package com.ahmed.Hadidy.exercise.entity;
 
+import com.ahmed.Hadidy.audit.entity.BaseEntity;
 import com.ahmed.Hadidy.workoutDay.entity.WorkoutDay;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Exercise {
+public class Exercise extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.ahmed.Hadidy.user.entity;
 
 import com.ahmed.Hadidy.Role;
+import com.ahmed.Hadidy.audit.entity.BaseEntity;
 import com.ahmed.Hadidy.profile.entity.Profile;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class HadidyUser extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,14 +39,14 @@ public class User {
     private Profile profile ;
 
 
-    public User(String username , String password , Role role , boolean enabled){
+    public HadidyUser(String username , String password , Role role , boolean enabled){
         this.username = username;
         this.password = password;
         this.role = role;
         this.enabled = enabled ;
     }
 
-    public User(String username , String password){
+    public HadidyUser(String username , String password){
         this.username = username;
         this.password = password;
 

@@ -1,5 +1,6 @@
 package com.ahmed.Hadidy.workoutPlan.entity;
 
+import com.ahmed.Hadidy.audit.entity.BaseEntity;
 import com.ahmed.Hadidy.profile.entity.Profile;
 import com.ahmed.Hadidy.workoutDay.entity.WorkoutDay;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkoutPlan {
+public class WorkoutPlan extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

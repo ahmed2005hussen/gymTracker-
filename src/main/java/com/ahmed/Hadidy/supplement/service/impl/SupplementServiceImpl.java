@@ -4,7 +4,7 @@ import com.ahmed.Hadidy.supplement.dto.SupplementResponse;
 import com.ahmed.Hadidy.supplement.dto.CreateSupplementRequest;
 import com.ahmed.Hadidy.supplement.dto.SupplementRequest;
 import com.ahmed.Hadidy.supplement.entity.Supplement;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.exception.DataNotExist;
 import com.ahmed.Hadidy.exception.UserNotFoundException;
 import com.ahmed.Hadidy.supplement.repository.SupplementRepository;
@@ -24,7 +24,7 @@ public class SupplementServiceImpl implements SupplementService {
     private final UserRepository userRepository;
 
 
-    private User findByUsername(String username) {
+    private HadidyUser findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(
                 () -> new UserNotFoundException(username)
         );
@@ -35,7 +35,7 @@ public class SupplementServiceImpl implements SupplementService {
     public SupplementResponse createSupplement(CreateSupplementRequest request,
                                                String username) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         Supplement supplement = new Supplement();
 
@@ -55,7 +55,7 @@ public class SupplementServiceImpl implements SupplementService {
     @Override
     public List<SupplementResponse> listSupplement(String username) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         List<Supplement> supplements = supplementRepository
                 .findAllByProfileId(user.getProfile().getId());
@@ -68,7 +68,7 @@ public class SupplementServiceImpl implements SupplementService {
     @Override
     public SupplementResponse getSupplement(Long id, String username) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         Supplement s = supplementRepository.findByIdAndProfileId(id, user.getProfile().getId())
                 .orElseThrow(() -> new DataNotExist("This supplement does not exist"));
@@ -80,7 +80,7 @@ public class SupplementServiceImpl implements SupplementService {
     @Override
     @Transactional
     public void deleteSupplement(Long id, String username) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         Supplement s = supplementRepository.findByIdAndProfileId(id, user.getProfile().getId())
                 .orElseThrow(() -> new DataNotExist("Supplement does not exist"));
@@ -91,7 +91,7 @@ public class SupplementServiceImpl implements SupplementService {
     @Transactional
     public SupplementResponse editSupplement(Long id, SupplementRequest request, String username) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         Supplement s = supplementRepository.findByIdAndProfileId(id, user.getProfile().getId())
                 .orElseThrow(() -> new DataNotExist("Supplement does not exist"));

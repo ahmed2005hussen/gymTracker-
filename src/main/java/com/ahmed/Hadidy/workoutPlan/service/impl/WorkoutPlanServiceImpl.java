@@ -4,7 +4,7 @@ package com.ahmed.Hadidy.workoutPlan.service.impl;
 import com.ahmed.Hadidy.workoutPlan.dto.CreateWorkoutPlanRequest;
 import com.ahmed.Hadidy.workoutPlan.dto.WorkoutPlanRequest;
 import com.ahmed.Hadidy.workoutPlan.dto.WorkoutPlanResponse;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.workoutPlan.entity.WorkoutPlan;
 import com.ahmed.Hadidy.exception.DataNotExist;
 import com.ahmed.Hadidy.exception.UserNotFoundException;
@@ -25,7 +25,7 @@ public class WorkoutPlanServiceImpl implements WorkoutPlanService {
     private final UserRepository userRepository;
 
 
-    private User findByUsername(String username) {
+    private HadidyUser findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(
                 () -> new UserNotFoundException(username)
         );
@@ -37,7 +37,7 @@ public class WorkoutPlanServiceImpl implements WorkoutPlanService {
     public WorkoutPlanResponse createWorkoutPlan(String username,
                                                  CreateWorkoutPlanRequest request) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = new WorkoutPlan();
 
@@ -52,7 +52,7 @@ public class WorkoutPlanServiceImpl implements WorkoutPlanService {
 
     @Override
     public List<WorkoutPlanResponse> listWorkoutPlan(String username) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         List<WorkoutPlan> workoutPlans = workoutPlanRepository
                 .findAllByProfileId(user.getProfile().getId());
@@ -63,7 +63,7 @@ public class WorkoutPlanServiceImpl implements WorkoutPlanService {
 
     @Override
     public WorkoutPlanResponse getWorkoutPlan(String username, Long id) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(id, user.getProfile().getId())
@@ -76,7 +76,7 @@ public class WorkoutPlanServiceImpl implements WorkoutPlanService {
     @Transactional
     public void deleteWorkoutPlan(String username, Long id) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(id, user.getProfile().getId())
@@ -90,7 +90,7 @@ public class WorkoutPlanServiceImpl implements WorkoutPlanService {
     public WorkoutPlanResponse editWorkoutPlan(String username,
                                                Long id, WorkoutPlanRequest request) {
 
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         WorkoutPlan workoutPlan = workoutPlanRepository.
                 findByIdAndProfileId(id, user.getProfile().getId())

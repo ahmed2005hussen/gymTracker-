@@ -1,6 +1,7 @@
 package com.ahmed.Hadidy.profile.entity;
 
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.audit.entity.BaseEntity;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profile {
+public class Profile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +43,7 @@ public class Profile {
 
     @OneToOne
     @JoinColumn(name = "user_id" , nullable = false , unique = true)
-    private User user ;
+    private HadidyUser user ;
 
     @Column(name="start_subscribe")
     private LocalDate startSubscribe ;

@@ -1,5 +1,6 @@
 package com.ahmed.Hadidy.meal.entity;
 
+import com.ahmed.Hadidy.audit.entity.BaseEntity;
 import com.ahmed.Hadidy.diet.entity.DietPlan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Meal {
+public class Meal extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

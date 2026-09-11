@@ -4,7 +4,7 @@ import com.ahmed.Hadidy.profile.dto.ProfileResponse;
 import com.ahmed.Hadidy.profile.dto.ProfileRequest;
 import com.ahmed.Hadidy.profile.entity.Profile;
 import com.ahmed.Hadidy.profile.service.impl.ProfileServiceImplementation;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.profile.repository.ProfileRepository;
 import com.ahmed.Hadidy.user.service.UserService;
 import com.ahmed.Hadidy.support.TestResultLogger;
@@ -39,7 +39,7 @@ class ProfileServiceImplementationTest {
 
     @BeforeEach
     void setUp() {
-        User user = new User("ahmed", "encoded-password");
+        HadidyUser user = new HadidyUser("ahmed", "encoded-password");
         profile = new Profile();
         profile.setId(20L);
         profile.setFullName("Ahmed");

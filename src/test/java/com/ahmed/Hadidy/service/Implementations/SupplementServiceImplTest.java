@@ -6,7 +6,7 @@ import com.ahmed.Hadidy.supplement.dto.SupplementRequest;
 import com.ahmed.Hadidy.profile.entity.Profile;
 import com.ahmed.Hadidy.supplement.entity.Supplement;
 import com.ahmed.Hadidy.supplement.service.impl.SupplementServiceImpl;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.supplement.repository.SupplementRepository;
 import com.ahmed.Hadidy.user.repository.UserRepository;
 import com.ahmed.Hadidy.support.TestResultLogger;
@@ -43,7 +43,7 @@ class SupplementServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        User user = new User("ahmed", "encoded-password");
+        HadidyUser user = new HadidyUser("ahmed", "encoded-password");
         user.setId(100L);
         profile = new Profile();
         profile.setId(PROFILE_ID);

@@ -2,7 +2,7 @@ package com.ahmed.Hadidy.service.Implementations;
 
 import com.ahmed.Hadidy.user.dto.EditPasswordRequest;
 import com.ahmed.Hadidy.user.dto.UserRequest;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.exception.IncorrectPasswordException;
 import com.ahmed.Hadidy.exception.UserNotFoundException;
 import com.ahmed.Hadidy.exception.UsernameAlreadyExistsException;
@@ -40,20 +40,20 @@ class UserServiceImplTest {
         UserRequest request = new UserRequest();
         request.setUsername("ahmed");
         request.setPassword("password123");
-        User savedUser = new User("ahmed", "encoded-password");
+        HadidyUser savedUser = new HadidyUser("ahmed", "encoded-password");
 
         when(userRepository.findByUsername("ahmed")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("password123")).thenReturn("encoded-password");
-        when(userRepository.save(any(User.class))).thenReturn(savedUser);
+        when(userRepository.save(any(HadidyUser.class))).thenReturn(savedUser);
 
-        User result = userService.registerUser(request);
+        HadidyUser result = userService.registerUser(request);
 
         assertSame(savedUser, result);
         verify(passwordEncoder).encode("password123");
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        ArgumentCaptor<HadidyUser> userCaptor = ArgumentCaptor.forClass(HadidyUser.class);
         verify(userRepository).save(userCaptor.capture());
 
-        User userToSave = userCaptor.getValue();
+        HadidyUser userToSave = userCaptor.getValue();
         assertNotNull(userToSave.getProfile());
         assertSame(userToSave, userToSave.getProfile().getUser());
     }
@@ -64,18 +64,18 @@ class UserServiceImplTest {
         request.setUsername("ahmed");
         request.setPassword("password123");
         when(userRepository.findByUsername("ahmed"))
-                .thenReturn(Optional.of(new User("ahmed", "existing-password")));
+                .thenReturn(Optional.of(new HadidyUser("ahmed", "existing-password")));
 
         assertThrows(UsernameAlreadyExistsException.class,
                 () -> userService.registerUser(request));
 
         verify(passwordEncoder, never()).encode(any());
-        verify(userRepository, never()).save(any(User.class));
+        verify(userRepository, never()).save(any(HadidyUser.class));
     }
 
     @Test
     void changePassword_encodesAndSavesWhenOldPasswordMatches() {
-        User user = new User("ahmed", "old-encoded-password");
+        HadidyUser user = new HadidyUser("ahmed", "old-encoded-password");
         EditPasswordRequest request = new EditPasswordRequest("old-password", "new-password");
         when(userRepository.findByUsername("ahmed")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("old-password", "old-encoded-password")).thenReturn(true);
@@ -89,7 +89,7 @@ class UserServiceImplTest {
 
     @Test
     void changePassword_throwsWhenOldPasswordDoesNotMatch() {
-        User user = new User("ahmed", "old-encoded-password");
+        HadidyUser user = new HadidyUser("ahmed", "old-encoded-password");
         EditPasswordRequest request = new EditPasswordRequest("wrong-password", "new-password");
         when(userRepository.findByUsername("ahmed")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("wrong-password", "old-encoded-password")).thenReturn(false);
@@ -98,7 +98,7 @@ class UserServiceImplTest {
                 () -> userService.changePassword(request, "ahmed"));
 
         verify(passwordEncoder, never()).encode(any());
-        verify(userRepository, never()).save(any(User.class));
+        verify(userRepository, never()).save(any(HadidyUser.class));
     }
 
     @Test
@@ -110,6 +110,6 @@ class UserServiceImplTest {
                 () -> userService.changePassword(request, "missing"));
 
         verify(passwordEncoder, never()).matches(any(), any());
-        verify(userRepository, never()).save(any(User.class));
+        verify(userRepository, never()).save(any(HadidyUser.class));
     }
 }

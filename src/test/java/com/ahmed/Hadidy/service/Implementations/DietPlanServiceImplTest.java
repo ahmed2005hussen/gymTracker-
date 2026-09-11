@@ -6,7 +6,7 @@ import com.ahmed.Hadidy.diet.dto.DietPlanRequest;
 import com.ahmed.Hadidy.diet.entity.DietPlan;
 import com.ahmed.Hadidy.diet.service.impl.DietPlanServiceImpl;
 import com.ahmed.Hadidy.profile.entity.Profile;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.diet.repository.DietPlanRepository;
 import com.ahmed.Hadidy.user.repository.UserRepository;
 import com.ahmed.Hadidy.support.TestResultLogger;
@@ -43,7 +43,7 @@ class DietPlanServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        User user = new User("ahmed", "encoded-password");
+        HadidyUser user = new HadidyUser("ahmed", "encoded-password");
         profile = new Profile();
         profile.setId(PROFILE_ID);
         profile.setUser(user);

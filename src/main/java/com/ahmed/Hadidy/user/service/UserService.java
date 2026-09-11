@@ -2,12 +2,12 @@ package com.ahmed.Hadidy.user.service;
 
 import com.ahmed.Hadidy.user.dto.EditPasswordRequest;
 import com.ahmed.Hadidy.user.dto.UserRequest;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 
 import java.util.Optional;
 
 public interface UserService {
-     Optional<User> findByUsername(String username);
-     User registerUser(UserRequest userRequest);
+     Optional<HadidyUser> findByUsername(String username);
+     HadidyUser registerUser(UserRequest userRequest);
      void changePassword(EditPasswordRequest editPasswordRequest  , String username );
 }

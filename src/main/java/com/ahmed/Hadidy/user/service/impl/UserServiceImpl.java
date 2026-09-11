@@ -3,7 +3,7 @@ package com.ahmed.Hadidy.user.service.impl;
 import com.ahmed.Hadidy.user.dto.EditPasswordRequest;
 import com.ahmed.Hadidy.user.dto.UserRequest;
 import com.ahmed.Hadidy.profile.entity.Profile;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.exception.IncorrectPasswordException;
 import com.ahmed.Hadidy.exception.UserNotFoundException;
 import com.ahmed.Hadidy.exception.UsernameAlreadyExistsException;
@@ -24,19 +24,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public Optional<HadidyUser> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
     @Transactional
-    public User registerUser(UserRequest userRequest) {
-        User u = userRepository.findByUsername(userRequest.getUsername())
+    public HadidyUser registerUser(UserRequest userRequest) {
+        HadidyUser u = userRepository.findByUsername(userRequest.getUsername())
                 .orElse(null);
         if (u != null) throw new UsernameAlreadyExistsException(userRequest.getUsername());
         String hashedPassword = passwordEncoder.encode(userRequest.getPassword());
 
-        User user = new User(userRequest.getUsername(), hashedPassword);
+        HadidyUser user = new HadidyUser(userRequest.getUsername(), hashedPassword);
         Profile p = new Profile();
         p.setUser(user);
         user.setProfile(p);
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(EditPasswordRequest request, String username) {
 
-        User user = userRepository.findByUsername(username)
+        HadidyUser user = userRepository.findByUsername(username)
                 .orElseThrow(
                         () -> new UserNotFoundException(username)
                 );

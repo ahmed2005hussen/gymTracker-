@@ -5,7 +5,7 @@ import com.ahmed.Hadidy.meal.dto.MealRequest;
 import com.ahmed.Hadidy.meal.dto.MealResponse;
 import com.ahmed.Hadidy.diet.entity.DietPlan;
 import com.ahmed.Hadidy.meal.entity.Meal;
-import com.ahmed.Hadidy.user.entity.User;
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import com.ahmed.Hadidy.exception.DataNotExist;
 import com.ahmed.Hadidy.exception.UserNotFoundException;
 import com.ahmed.Hadidy.diet.repository.DietPlanRepository;
@@ -26,7 +26,7 @@ public class MealServiceImpl implements MealService {
     private final MealRepository mealRepository;
     private final DietPlanRepository dietPlanRepository;
 
-    private User findByUsername(String username) {
+    private HadidyUser findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(
                 () -> new UserNotFoundException(username)
         );
@@ -37,7 +37,7 @@ public class MealServiceImpl implements MealService {
     @Transactional
     public MealResponse createMeal(String username,
                                    Long dietPlanId, CreateMealRequest request) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         DietPlan dietPlan = dietPlanRepository.
                 findByIdAndProfileId(dietPlanId, user.getProfile().getId())
@@ -62,7 +62,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<MealResponse> listMeal(String username, Long dietPlanId) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         DietPlan dietPlan = dietPlanRepository.
                 findByIdAndProfileId(dietPlanId, user.getProfile().getId())
@@ -75,7 +75,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public MealResponse getMeal(String username, Long dietPlanId, Long mealId) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         DietPlan dietPlan = dietPlanRepository.
                 findByIdAndProfileId(dietPlanId, user.getProfile().getId())
@@ -91,7 +91,7 @@ public class MealServiceImpl implements MealService {
     @Override
     @Transactional
     public void deleteMeal(String username, Long dietPlanId, Long mealId) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         DietPlan dietPlan = dietPlanRepository.
                 findByIdAndProfileId(dietPlanId, user.getProfile().getId())
@@ -108,7 +108,7 @@ public class MealServiceImpl implements MealService {
     @Transactional
     public MealResponse editMeal(String username, Long dietPlanId,
                                  Long mealId, MealRequest request) {
-        User user = findByUsername(username);
+        HadidyUser user = findByUsername(username);
 
         DietPlan dietPlan = dietPlanRepository.
                 findByIdAndProfileId(dietPlanId, user.getProfile().getId())

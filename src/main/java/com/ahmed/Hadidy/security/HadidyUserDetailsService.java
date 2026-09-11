@@ -1,5 +1,6 @@
 package com.ahmed.Hadidy.security;
 
+import com.ahmed.Hadidy.user.entity.HadidyUser;
 import org.springframework.security.core.userdetails.User;
 import com.ahmed.Hadidy.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class HadidyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        com.ahmed.Hadidy.user.entity.User
+        HadidyUser
                 user = userRepository.findByUsername(username).orElseThrow(
                 ()-> new RuntimeException("not found user with username: " + username)
         );
