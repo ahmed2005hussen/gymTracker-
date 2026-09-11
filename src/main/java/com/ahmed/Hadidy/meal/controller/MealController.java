@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/diet-plans/{dietPlanId}/meals")
+@RequestMapping("/diet-plans/{dietPlanId}/meals")
 @RequiredArgsConstructor
 public class MealController {
 

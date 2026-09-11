@@ -19,13 +19,13 @@ public class WorkoutPlan extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
 
     @Column(name = "name")
-    private String name ;
+    private String name;
 
-    @Column(name ="description")
-    private String description ;
+    @Column(name = "description")
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
@@ -35,6 +35,6 @@ public class WorkoutPlan extends BaseEntity {
     private List<WorkoutDay> workoutDays = new ArrayList<>();
 
     @Column(name = "picture")
-    private String picture ;
+    private String picture;
 
 }
