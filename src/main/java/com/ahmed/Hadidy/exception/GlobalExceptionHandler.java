@@ -12,20 +12,20 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ResponseEntity<Map<String,String>> handleDuplicateUsername
-            (UsernameAlreadyExistsException exception){
+    public ResponseEntity<Map<String, String>> handleDuplicateUsername
+            (UsernameAlreadyExistsException exception) {
 
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(Map.of("message" , "Username already exists."));
+                .body(Map.of("message", "Username already exists."));
 
     }
 
     @ExceptionHandler(IncorrectPasswordException.class)
-    public ResponseEntity<Map<String,String>> handleIcorectPassword
-            (IncorrectPasswordException exception){
+    public ResponseEntity<Map<String, String>> handleIcorectPassword
+            (IncorrectPasswordException exception) {
 
         return ResponseEntity.badRequest().body(
-                Map.of("message","Current password is incorrect.")
+                Map.of("message", "Current password is incorrect.")
         );
     }
 
@@ -51,22 +51,29 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException exception){
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException exception) {
 
         return ResponseEntity.badRequest().body(
-                Map.of("message" , exception.getMessage())
+                Map.of("message", exception.getMessage())
         );
 
     }
 
     @ExceptionHandler(DataNotExist.class)
-    public ResponseEntity<Map<String , String>> handleDataNotExist(
+    public ResponseEntity<Map<String, String>> handleDataNotExist(
             DataNotExist exception
-    ){
+    ) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                Map.of("message" , exception.getMessage())
+                Map.of("message", exception.getMessage())
         );
+    }
+
+    @ExceptionHandler(CompromisedPasswordException.class)
+    public ResponseEntity<Map<String, String>> compromised(CompromisedPasswordException exception) {
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(Map.of("password", exception.getMessage()));
     }
 
 }

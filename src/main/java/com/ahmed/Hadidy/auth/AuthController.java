@@ -9,6 +9,14 @@ public class AuthController {
     // login
     // JWT
 
+    public void registerUser(){
+
+    }
+
+    public void loginUser(){
+
+    }
+
 
     // register
 
